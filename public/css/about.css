@@ -1,0 +1,28 @@
+/* Plain CSS: edit this file and refresh; no asset build required. */
+@layer components {
+    .about-hero { padding-block: 38px 100px; }
+    .about-hero::before { content: ''; position: absolute; top: -260px; right: -220px; width: 800px; height: 800px; pointer-events: none; background: radial-gradient(circle, rgb(200 16 46 / .08), transparent 65%); }
+    .about-page-title { font-size: clamp(42px, 4.5vw, 64px); line-height: 1.06; letter-spacing: -.04em; }
+    .about-photo-frame { aspect-ratio: 600 / 760; }
+    .about-photo-frame img { object-position: 50% 62%; transition: transform 1.2s cubic-bezier(.22,1,.36,1); }
+    .about-portrait:hover img { transform: scale(1.035); }
+    .about-photo-caption { bottom: 24px; left: -32px; right: 32px; }
+    .about-portrait::before { content: ''; position: absolute; z-index: -1; inset: 24px -16px -16px 24px; border: 1px solid var(--color-line); border-radius: 24px; }
+    .about-history::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 0 80%, rgb(200 16 46 / .16), transparent 60%); }
+    .about-history-word { font-size: clamp(80px, 10vw, 144px); line-height: .95; letter-spacing: -.06em; }
+    .history-list::before { content: ''; position: absolute; top: 52px; bottom: 52px; left: 0; width: 1px; background: linear-gradient(var(--color-brand-light), rgb(255 255 255 / .1)); }
+    .history-item::before { content: ''; position: absolute; top: 52px; left: -33px; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--color-ink); background: var(--color-brand-light); box-shadow: 0 0 0 5px rgb(230 57 70 / .12); }
+    .about-value { position: relative; overflow: hidden; }
+    .about-value::after { content: ''; position: absolute; inset: auto 0 0; height: 3px; background: var(--color-brand); transform: scaleX(0); transform-origin: left; transition: transform .4s ease; }
+    .about-value:hover::after { transform: scaleX(1); }
+    @media (min-width: 640px) { .history-item::before { left: -45px; } }
+    @media (max-width: 1023px) { .about-hero { padding-bottom: 72px; } .about-photo-caption { left: 20px; right: 20px; } }
+    @media (max-width: 639px) { .about-hero { padding-top: 28px; } .about-page-title { font-size: clamp(36px, 9.5vw, 46px); } .about-photo-frame { aspect-ratio: 600 / 800; } .about-photo-caption { bottom: 16px; left: 12px; right: 12px; padding: 16px; } }
+}
+@media (prefers-reduced-motion: no-preference) {
+    .about-introduction { animation: about-enter .9s ease both; }
+    .about-portrait { animation: about-enter 1s .15s ease both; }
+    .about-photo-caption { animation: about-caption 5s 1.2s ease-in-out infinite; }
+}
+@keyframes about-enter { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+@keyframes about-caption { 50% { transform: translateY(-6px); } }

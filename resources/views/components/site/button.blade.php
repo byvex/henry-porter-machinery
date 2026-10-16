@@ -1,0 +1,2 @@
+@props(['href', 'variant' => 'primary'])
+<a href="{{ $href }}" {{ $attributes->class(['inline-flex items-center justify-center gap-2 rounded-full px-9 py-4 font-display text-sm font-bold transition duration-300 hover:-translate-y-0.5', 'button-primary bg-brand text-white hover:bg-brand-dark' => $variant === 'primary', 'border border-line hover:border-brand hover:text-brand' => $variant === 'outline', 'border border-white/30 text-white hover:bg-white/10' => $variant === 'ghost']) }}>{{ $slot }}</a>
