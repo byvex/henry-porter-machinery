@@ -97,6 +97,11 @@ class JoomlaImporter
                 continue;
             }
             $fields = $brand;
+            if (! Brand::withTrashed()->where('source_key', $brand['source_key'])->exists()) {
+                $homeOrder = array_search($brand['slug'], ['pottinger', 'bobman', 'hustler', 'multione', 'strautmann', 'fleming', 'sherpa'], true);
+                $fields['show_on_homepage'] = $homeOrder !== false;
+                $fields['homepage_order'] = $homeOrder === false ? 0 : $homeOrder;
+            }
             unset($fields['logo_key'], $fields['_skip']);
             $fields['deleted_at'] = null;
             $fields['admin_modified_at'] = null;
@@ -111,6 +116,11 @@ class JoomlaImporter
                 continue;
             }
             $fields = $category;
+            if (! Category::withTrashed()->where('source_key', $category['source_key'])->exists()) {
+                $homeOrder = array_search($category['slug'], ['compact-loaders', 'grassland', 'tillage', 'feeders', 'cubicle-cleaners', 'other-machinery'], true);
+                $fields['show_on_homepage'] = $homeOrder !== false;
+                $fields['homepage_order'] = $homeOrder === false ? 0 : $homeOrder;
+            }
             unset($fields['parent_slug'], $fields['image_key'], $fields['_skip']);
             $fields['deleted_at'] = null;
             $fields['admin_modified_at'] = null;
@@ -182,10 +192,12 @@ class JoomlaImporter
             if ($target['type'] !== 'listing' && $targetId === null) {
                 throw new RuntimeException('Unresolved legacy URL target.');
             }
+            $existingMap = LegacyUrlMapping::where('source_hash', $url['source_hash'])->first();
+            $verified = $existingMap && $existingMap->target_type === $target['type'] && $existingMap->target_id === $targetId && $existingMap->filters === $target['filters'] ? $existingMap->verification_status : 'pending';
             LegacyUrlMapping::updateOrCreate(['source_hash' => $url['source_hash']], [
                 'source_path' => $url['source_path'], 'source_query' => $url['source_query'],
                 'target_type' => $target['type'], 'target_id' => $targetId, 'filters' => $target['filters'],
-                'verification_status' => 'pending', 'evidence' => $url['evidence'],
+                'verification_status' => $verified, 'evidence' => $url['evidence'],
             ]);
         }
     }

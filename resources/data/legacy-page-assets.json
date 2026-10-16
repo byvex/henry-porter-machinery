@@ -1,0 +1,47 @@
+[
+  {
+    "source_path": "media/widgetkit/News_Clogher_Valley_Show_1-61e0d33b907abba456a1c2e4e8bfdc97.jpg",
+    "storage_path": "news/2019/08-08/4/News_Clogher_Valley_Show_1-61e0d33b907abba456a1c2e4e8bfdc97.jpg",
+    "checksum": "4e28309f2d301ad0a38b3761f4ba1880d84ab51a2c8bea0eefbe1763940b9004"
+  },
+  {
+    "source_path": "media/widgetkit/News_Clogher_Valley_Show_2-1af2ee7a345ec6d580fb0bd17f74dba8.jpg",
+    "storage_path": "news/2019/08-08/4/News_Clogher_Valley_Show_2-1af2ee7a345ec6d580fb0bd17f74dba8.jpg",
+    "checksum": "3bd8fd9133b538c4a79120f37af76e907147ddb58787cd24cf870194766f8d39"
+  },
+  {
+    "source_path": "media/widgetkit/News_Clogher_Valley_Show_3-98a1c1152ed69861e16b0ea1de97f337.jpg",
+    "storage_path": "news/2019/08-08/4/News_Clogher_Valley_Show_3-98a1c1152ed69861e16b0ea1de97f337.jpg",
+    "checksum": "ea65e1220587db5e0a953d63fa1f8c6437a8409b64101ecc06fc7ebe0fb3e6eb"
+  },
+  {
+    "source_path": "media/k2/items/cache/9caa2793658f3cc387f216157300b1ce_L.jpg",
+    "storage_path": "news/2019/11-22/7/9caa2793658f3cc387f216157300b1ce_L.jpg",
+    "checksum": "28f4aa69b12c0580b55e10b73a725916c06199d19e293ba4658f131d65afc0a5"
+  },
+  {
+    "source_path": "media/k2/items/cache/184b7cb84d7b456c96a0bdfbbeaa5f14_L.jpg",
+    "storage_path": "news/2020/03-10/8/184b7cb84d7b456c96a0bdfbbeaa5f14_L.jpg",
+    "checksum": "b2590d06d86927594f1e77b7cb208dd96e27c78668e389e3675ea4562d77566c"
+  },
+  {
+    "source_path": "media/k2/items/cache/d61d44254608dd06ccdd2ff02982d14d_L.jpg",
+    "storage_path": "news/2020/06-17/9/d61d44254608dd06ccdd2ff02982d14d_L.jpg",
+    "checksum": "cdb3dfd690229c2627fa9497ab8c873e43b26102ed834609ab0695c9c884fe6c"
+  },
+  {
+    "source_path": "images/banners/Partshp.jpg",
+    "storage_path": "pages/parts/Partshp.jpg",
+    "checksum": "f7079f380e9e66d5f380a7f11554abb1804045c88f1a025fd9460b4a7f2126b4"
+  },
+  {
+    "source_path": "images/banners/Pottinger_Original_Parts_.jpg",
+    "storage_path": "pages/parts/Pottinger_Original_Parts_.jpg",
+    "checksum": "b4617a1a06e3f3d3f2c383516497589f92de173355797b9a97b6a8fa699a7964"
+  },
+  {
+    "source_path": "images/banners/Pottinger_Parts_Centre.jpg",
+    "storage_path": "pages/parts/Pottinger_Parts_Centre.jpg",
+    "checksum": "da250e2ac11ad7b40a10800c245fc1d19491a7069f37e346abd73dec55d33f28"
+  }
+]

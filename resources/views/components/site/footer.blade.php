@@ -13,18 +13,18 @@
         <div>
           <h4>Machinery</h4>
           <ul>
-            <li><a href="{{ request()->routeIs('home') ? '#products' : route('home').'#products' }}">New Machinery</a></li>
-            <li><a href="{{ request()->routeIs('home') ? '#used' : route('home').'#used' }}">Used Machinery</a></li>
-            <li><a href="{{ request()->routeIs('home') ? '#brands' : route('home').'#brands' }}">Brands</a></li>
-            <li><a href="{{ request()->routeIs('home') ? '#services' : route('home').'#services' }}">Parts</a></li>
+            <li><a href="{{ route('machinery.new') }}">New Machinery</a></li>
+            <li><a href="{{ route('machinery.used') }}">Used Machinery</a></li>
+            <li><a href="{{ route('brands.index') }}">Brands</a></li>
+            <li><a href="{{ route('parts') }}">Parts</a></li>
           </ul>
         </div>
         <div>
           <h4>Company</h4>
           <ul>
             <li><a href="{{ route('about') }}">About Us</a></li>
-            <li><a href="{{ request()->routeIs('home') ? '#news' : route('home').'#news' }}">News & Events</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="{{ route('news.index') }}">News & Events</a></li>
+            <li><a href="{{ route('contact') }}">Contact</a></li>
             <li><span>Careers</span></li>
           </ul>
         </div>
@@ -44,7 +44,7 @@
           <span aria-label="Instagram">◐</span>
           <span aria-label="YouTube">▶</span>
         </div>
-        <span>Privacy Policy · Cookie Policy</span>
+        <div class="flex gap-4"><a href="{{ route('cookie-policy') }}">Cookie Policy</a><a href="{{ route('sitemap') }}">Sitemap</a></div>
       </div>
     </x-site.container>
   </footer>

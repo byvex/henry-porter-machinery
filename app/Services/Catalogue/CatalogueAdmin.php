@@ -4,6 +4,7 @@ namespace App\Services\Catalogue;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\LegacyUrlMapping;
 use App\Models\MediaAsset;
 use App\Models\Product;
 use Illuminate\Http\UploadedFile;
@@ -97,12 +98,16 @@ class CatalogueAdmin
                 'condition' => ['required', Rule::in(['new', 'used'])], 'status' => ['required', Rule::in(['draft', 'published'])], 'is_featured' => ['boolean'],
             ];
         } else {
-            $rules += ['image_alt_text' => ['nullable', 'string', 'max:1000'], 'logo_alt_text' => ['nullable', 'string', 'max:1000'], 'description' => ['nullable', 'string', 'max:100000'], 'is_active' => ['boolean']];
+            $rules += ['show_on_homepage' => ['boolean'], 'homepage_order' => ['integer', 'min:0', 'max:1000000'], 'image_alt_text' => ['nullable', 'string', 'max:1000'], 'logo_alt_text' => ['nullable', 'string', 'max:1000'], 'description' => ['nullable', 'string', 'max:100000'], 'is_active' => ['boolean']];
             if ($resource === 'categories') {
                 $rules['parent_id'] = ['nullable', 'uuid', Rule::exists('categories', 'id')->whereNull('deleted_at')];
             }
         }
         $data = Validator::make($form, $rules)->validate();
+        $prefix = $resource === 'products' ? 'machinery' : $resource;
+        if (LegacyUrlMapping::where('source_path', '/'.$prefix.'/'.$data['slug'])->where('target_id', '!=', $record->id)->exists()) {
+            throw ValidationException::withMessages(['slug' => 'This slug is reserved by an existing public redirect.']);
+        }
         if ($resource === 'categories') {
             $parent = $data['parent_id'] ?? null;
             $seen = [$record->id];
@@ -150,7 +155,11 @@ class CatalogueAdmin
                 $record->fill($fields);
                 $record->admin_modified_at = now();
                 $folder = app(MediaFolders::class)->folder($record);
+                $oldSlug = $record->getRawOriginal('slug');
                 $record->save();
+                if (is_string($oldSlug)) {
+                    app(LegacyUrls::class)->rememberSlug($record, $oldSlug);
+                }
                 if ($record instanceof Product) {
                     $record->categories()->sync(array_fill_keys($data['category_ids'] ?? [], ['source_imported' => false, 'sort_order' => 0]));
                     $allowed = $record->media()->pluck('media_assets.id')->all();

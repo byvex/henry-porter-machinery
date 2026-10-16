@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/** @property-read Brand|null $brand */
 class Product extends Model
 {
     use HasUuids, SoftDeletes;
@@ -51,7 +52,7 @@ class Product extends Model
 
     public function coverImage(): ?MediaAsset
     {
-        return $this->media()->orderByPivot('sort_order')->orderByPivot('legacy_product_media_id')->first();
+        return $this->media()->where('mime_type', 'like', 'image/%')->orderByPivot('sort_order')->orderByPivot('legacy_product_media_id')->first();
     }
 
     /** @return HasMany<ProductVideo, $this> */

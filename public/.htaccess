@@ -13,8 +13,11 @@
     RewriteCond %{HTTP:x-xsrf-token} .
     RewriteRule .* - [E=HTTP_X_XSRF_TOKEN:%{HTTP:X-XSRF-Token}]
 
-    # Redirect Trailing Slashes If Not A Folder...
+    # Let Laravel resolve legacy filtering/catalogue URLs in one hop.
+    # Normalising their trailing slash here would add an unnecessary redirect.
     RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !^/(filtering|new-machines|vm|news-events)(/|\.html|$) [NC]
+    RewriteCond %{REQUEST_URI} !\.html/$ [NC]
     RewriteCond %{REQUEST_URI} (.+)/$
     RewriteRule ^ %1 [L,R=301]
 

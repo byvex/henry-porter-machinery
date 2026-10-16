@@ -9,20 +9,20 @@ function initializeSite() {
  menu?.addEventListener('click', event => { if (event.target.closest('a')) closeMenu(); });
  site.addEventListener('keydown', event => { if (event.key === 'Escape' && menu && !menu.hidden) { closeMenu(); toggle.focus(); } });
  window.matchMedia('(min-width: 1024px)').addEventListener('change', closeMenu);
- const filters = [...site.querySelectorAll('[data-filter]')];
- const products = [...site.querySelectorAll('[data-product]')];
- const empty = site.querySelector('[data-filter-empty]');
+ const featured = site.querySelector('[data-home-featured]');
+ const filters = [...(featured?.querySelectorAll('[data-filter]') || [])];
+ const products = [...(featured?.querySelectorAll('[data-product]') || [])];
+ const empty = featured?.querySelector('[data-filter-empty]');
  const filterProducts = filter => {
   let count = 0;
   filters.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === filter)));
   products.forEach(card => {
-   const matches = filter === 'all' || card.dataset.category === filter || (filter === 'used' && card.dataset.condition === 'used');
+   const matches = filter === 'all' || (card.dataset.category || '').split(' ').includes(filter) || (filter === 'used' && card.dataset.condition === 'used');
    card.hidden = !matches; if (matches) count++;
   });
   if (empty) empty.hidden = count !== 0;
  };
  filters.forEach(button => button.addEventListener('click', () => filterProducts(button.dataset.filter)));
- site.querySelectorAll('[data-category]:not([data-product])').forEach(link => link.addEventListener('click', () => filterProducts(link.dataset.category)));
  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
  if (!('IntersectionObserver' in window) || reducedMotion.matches) return;
  const reveal = new IntersectionObserver(entries => entries.forEach(entry => {

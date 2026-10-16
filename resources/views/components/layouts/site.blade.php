@@ -1,10 +1,16 @@
-@props(['title' => 'Henry Porter Machinery | Agricultural Machinery Northern Ireland', 'description' => 'Premium agricultural machinery, genuine parts and expert service from Henry Porter Machinery in Hillsborough, Northern Ireland.'])
+@props(['title' => 'Henry Porter Machinery | Agricultural Machinery Northern Ireland', 'description' => 'Premium agricultural machinery, genuine parts and expert service from Henry Porter Machinery in Hillsborough, Northern Ireland.', 'image'=>null, 'noindex'=>false])
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ $title }}</title>
 <meta name="description" content="{{ $description }}">
+@php($canonical = rtrim(config('app.url'),'/').'/'.ltrim(request()->path()==='/'?'':request()->path(),'/').(request()->integer('page',1)>1?'?page='.request()->integer('page'):''))
+<link rel="canonical" href="{{ $canonical }}">
+<meta name="robots" content="{{ $noindex || request()->hasAny(['q','brands','categories','condition','sort']) ? 'noindex,follow' : 'index,follow' }}">
+<meta property="og:title" content="{{ $title }}"><meta property="og:description" content="{{ $description }}"><meta property="og:url" content="{{ $canonical }}"><meta property="og:type" content="website">@if($image)<meta property="og:image" content="{{ str_starts_with($image,'/') ? rtrim(config('app.url'),'/').$image : $image }}">@endif
+<link rel="stylesheet" href="{{ asset('css/catalogue.css') }}?v={{ filemtime(public_path('css/catalogue.css')) }}">
+<script src="{{ asset('js/catalogue.js') }}?v={{ filemtime(public_path('js/catalogue.js')) }}" defer></script>
 <link rel="icon" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">

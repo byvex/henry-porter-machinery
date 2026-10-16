@@ -78,6 +78,8 @@ class CatalogueHtml
                     } else {
                         $node->setAttribute($name, $resolved);
                     }
+                } elseif ($tag === 'ol' && $name === 'start' && ctype_digit($value) && (int) $value > 0 && (int) $value <= 1000) {
+                    continue;
                 } elseif (($name === 'alt' && $tag === 'img') || $name === 'title') {
                     continue;
                 } elseif (in_array($name, ['colspan', 'rowspan'], true) && in_array($tag, ['td', 'th'], true) && ctype_digit($value) && (int) $value > 0 && (int) $value <= 100) {

@@ -65,7 +65,7 @@
                         <label class="flex items-center gap-2 text-sm"><input type="checkbox" wire:model="form.is_featured">Featured machinery</label>
                     @else
                         @if($resource === 'categories')<x-admin.field label="Parent category"><select class="admin-input" wire:model="form.parent_id"><option value="">Top-level category</option>@foreach($categories as $category)@if($category->id !== $id)<option value="{{ $category->id }}">{{ $category->name }}</option>@endif @endforeach</select></x-admin.field>@endif
-                        <label class="flex items-center gap-2 text-sm"><input type="checkbox" wire:model="form.is_active">Active</label>
+                        <label class="flex items-center gap-2 text-sm"><input type="checkbox" wire:model="form.is_active">Active</label><label class="flex items-center gap-2 text-sm"><input type="checkbox" wire:model="form.show_on_homepage">Show on homepage</label><x-admin.field label="Homepage order"><input class="admin-input" type="number" min="0" wire:model="form.homepage_order"></x-admin.field>
                     @endif
                         <x-admin.field label="Display order" hint="Lower numbers appear first."><input class="admin-input" type="number" min="0" max="1000000" wire:model="form.sort_order"></x-admin.field>
                     </div>

@@ -1,11 +1,12 @@
 @php
     $homeSection = fn ($section) => request()->routeIs('home') ? '#'.$section : route('home').'#'.$section;
     $links = [
-        ['label' => 'New Machinery', 'href' => $homeSection('products'), 'active' => false],
-        ['label' => 'Used Machinery', 'href' => $homeSection('used'), 'active' => false],
-        ['label' => 'Brands', 'href' => $homeSection('brands'), 'active' => false],
+        ['label' => 'New Machinery', 'href' => route('machinery.new'), 'active' => request()->routeIs('machinery.new')],
+        ['label' => 'Used Machinery', 'href' => route('machinery.used'), 'active' => request()->routeIs('machinery.used')],
+        ['label' => 'Brands', 'href' => route('brands.index'), 'active' => request()->routeIs('brands.*')],
+        ['label'=>'Parts','href'=>route('parts'),'active'=>request()->routeIs('parts')],
         ['label' => 'About', 'href' => route('about'), 'active' => request()->routeIs('about')],
-        ['label' => 'News', 'href' => $homeSection('news'), 'active' => false],
+        ['label' => 'News', 'href' => route('news.index'), 'active' => request()->routeIs('news.*')],
     ];
 @endphp
 <nav class="sticky top-0 z-50 border-b border-line bg-white/95 backdrop-blur-xl" aria-label="Main navigation">
@@ -17,7 +18,7 @@
             @endforeach
         </ul>
         <div class="flex items-center gap-3">
-            <a href="#contact" class="rounded-full bg-brand px-3 py-3 font-display text-xs font-bold text-white transition hover:bg-brand-dark sm:px-5">Contact Us</a>
+            <a href="{{ route('contact') }}" class="rounded-full bg-brand px-3 py-3 font-display text-xs font-bold text-white transition hover:bg-brand-dark sm:px-5">Contact Us</a>
             <button type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" class="rounded-lg border border-line px-3 py-2 text-sm font-semibold lg:hidden">Menu</button>
         </div>
     </x-site.container>

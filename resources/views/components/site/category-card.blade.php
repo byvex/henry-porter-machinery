@@ -1,5 +1,5 @@
 @props(['item'])
-<a href="#products" data-category="{{ $item['filter'] }}" {{ $attributes->class(['category-card group block relative overflow-hidden rounded-card transition duration-500 hover:-translate-y-1.5 hover:shadow-xl', $item['size']]) }}>
+<a href="{{ $item['url'] ?? route('categories.index') }}" data-category="{{ $item['filter'] }}" {{ $attributes->class(['category-card group block relative overflow-hidden rounded-card transition duration-500 hover:-translate-y-1.5 hover:shadow-xl', $item['size']]) }}>
           <x-site.image-placeholder :src="$item['imageUrl'] ?? null" :alt="$item['title']" :label="$item['image']" />
           <div class="category-overlay absolute inset-0 flex flex-col items-start justify-end p-8">
             <div class="mb-2.5 font-display text-xs font-bold uppercase tracking-widest text-white/70">{{ $item['eyebrow'] }}</div>

@@ -9,8 +9,8 @@
             <h3 class="mb-2 font-display text-lg font-bold leading-snug">{{ $item['title'] }}</h3>
             <p class="mb-4 text-sm leading-relaxed text-muted">{{ $item['description'] }}</p>
             <div class="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4">
-              <div class="font-display font-extrabold text-ink">Enquire<small class="mt-0.5 block text-xs font-normal text-muted">Price on request</small></div>
-              <a href="#contact" class="inline-flex rounded-full border border-brand px-4 py-2 font-display text-xs font-bold text-brand transition hover:bg-brand hover:text-white">View Details →</a>
+              <div class="font-display font-extrabold text-ink"><span class="text-sm">Talk to our team</span></div>
+              <a href="{{ $item['url'] ?? route('contact') }}" class="inline-flex rounded-full border border-brand px-4 py-2 font-display text-xs font-bold text-brand transition hover:bg-brand hover:text-white">View Details →</a>
             </div>
           </div>
         </div>

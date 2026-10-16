@@ -133,6 +133,23 @@ class JoomlaCatalogueImportTest extends TestCase
         $this->assertSame('keep this file', Storage::disk('public')->get('unrelated.txt'));
     }
 
+    public function test_reimport_preserves_homepage_selections_and_verified_url_mappings(): void
+    {
+        app(JoomlaImporter::class)->run($this->sandbox.'/backup', true);
+        $brand = Brand::where('slug', 'pottinger')->firstOrFail();
+        $category = Category::where('slug', 'grassland')->firstOrFail();
+        $brand->update(['show_on_homepage' => false, 'homepage_order' => 99]);
+        $category->update(['show_on_homepage' => false, 'homepage_order' => 98]);
+        $mapping = LegacyUrlMapping::firstOrFail();
+        $mapping->update(['verification_status' => 'verified']);
+        app(JoomlaImporter::class)->run($this->sandbox.'/backup', true);
+        $this->assertFalse($brand->fresh()->show_on_homepage);
+        $this->assertSame(99, $brand->fresh()->homepage_order);
+        $this->assertFalse($category->fresh()->show_on_homepage);
+        $this->assertSame(98, $category->fresh()->homepage_order);
+        $this->assertSame('verified', $mapping->fresh()->verification_status);
+    }
+
     public function test_admin_edits_and_deletions_survive_reimport_unless_explicitly_overwritten(): void
     {
         app(JoomlaImporter::class)->run($this->sandbox.'/backup', true);

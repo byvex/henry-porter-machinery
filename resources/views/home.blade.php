@@ -19,8 +19,8 @@
           Quality machinery, expert service, and genuine parts — all from our Hillsborough base.
         </p>
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
-          <x-site.button href="#products" variant="primary">Browse Machinery →</x-site.button>
-          <x-site.button href="#brands" variant="ghost">🏆 Official Pottinger Dealer</x-site.button>
+          <x-site.button :href="route('machinery.index')" variant="primary">Browse Machinery →</x-site.button>
+          <x-site.button :href="route('brands.show','pottinger')" variant="ghost">🏆 Official Pottinger Dealer</x-site.button>
         </div>
         <div class="mt-12 flex items-center gap-3 font-display text-xs font-semibold uppercase tracking-widest text-white/50">
           <span class="h-px w-10 bg-current"></span>
@@ -30,8 +30,8 @@
       </div>
 
       <div class="hero-stat-badge rounded-2xl border border-white/20 bg-white/10 px-7 py-6 font-display backdrop-blur-xl">
-        <div class="num">40+</div>
-        <div class="label">Years Trusted</div>
+        <div class="num">2006</div>
+        <div class="label">Established</div>
       </div>
     </x-site.container>
   </section>
@@ -39,10 +39,10 @@
   <div class="overflow-hidden border-y border-white/10 bg-brand py-5 text-white">
     <div class="marquee-track">
       <div class="flex items-center gap-15">
-        @foreach ($brands as $brand)<span>{{ $brand }}</span><span class="size-1.5 shrink-0 rounded-full bg-white/60" aria-hidden="true"></span>@endforeach
+        @foreach ($brands as $brand)<a href="{{ $brand['url'] }}">{{ $brand['name'] }}</a><span class="size-1.5 shrink-0 rounded-full bg-white/60" aria-hidden="true"></span>@endforeach
       </div>
-      <div class="flex items-center gap-15" aria-hidden="true">
-        @foreach ($brands as $brand)<span>{{ $brand }}</span><span class="size-1.5 shrink-0 rounded-full bg-white/60" aria-hidden="true"></span>@endforeach
+      <div class="flex items-center gap-15" aria-hidden="true" inert>
+        @foreach ($brands as $brand)<a href="{{ $brand['url'] }}">{{ $brand['name'] }}</a><span class="size-1.5 shrink-0 rounded-full bg-white/60" aria-hidden="true"></span>@endforeach
       </div>
     </div>
   </div>
@@ -58,7 +58,7 @@
 
   <section class="section-space relative overflow-hidden bg-white reveal" id="categories">
     <x-site.container>
-      <x-site.heading eyebrow="Product Categories" title="Shop By Category" description="Browse our full range of premium machinery by category — from grassland equipment to compact loaders." :centered="true" />
+      <x-site.heading eyebrow="Product Categories" title="Browse By Category" description="Browse our full range of premium machinery by category — from grassland equipment to compact loaders." :centered="true" />
       <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         @foreach ($categories as $item)
 <x-site.category-card :item="$item" />
@@ -69,16 +69,13 @@
     </x-site.container>
   </section>
 
-  <section class="section-space bg-canvas reveal" id="products">
+  <section class="section-space bg-canvas reveal" id="products" data-home-featured>
     <x-site.container>
-      <x-site.heading eyebrow="Featured Machinery" title="Latest Additions" description="Browse our newest and most popular machinery — filter by category to find exactly what you need." :centered="true" />
+      <x-site.heading eyebrow="Featured Machinery" title="Featured Machinery" description="Browse our newest and most popular machinery — filter by category to find exactly what you need." :centered="true" />
       <div class="mb-10 flex flex-wrap gap-2.5" role="group" aria-label="Filter featured machinery">
         <button type="button" data-filter="all" aria-pressed="true" class="filter-button rounded-full border border-line px-5 py-2.5 font-display text-xs font-semibold text-muted transition hover:border-brand hover:text-brand">All Products</button>
-        <button type="button" data-filter="tractors" aria-pressed="false" class="filter-button rounded-full border border-line px-5 py-2.5 font-display text-xs font-semibold text-muted transition hover:border-brand hover:text-brand">Tractors</button>
-        <button type="button" data-filter="loaders" aria-pressed="false" class="filter-button rounded-full border border-line px-5 py-2.5 font-display text-xs font-semibold text-muted transition hover:border-brand hover:text-brand">Loaders</button>
-        <button type="button" data-filter="grassland" aria-pressed="false" class="filter-button rounded-full border border-line px-5 py-2.5 font-display text-xs font-semibold text-muted transition hover:border-brand hover:text-brand">Grassland</button>
-        <button type="button" data-filter="feeding" aria-pressed="false" class="filter-button rounded-full border border-line px-5 py-2.5 font-display text-xs font-semibold text-muted transition hover:border-brand hover:text-brand">Feeding</button>
-        <button type="button" data-filter="used" aria-pressed="false" class="filter-button rounded-full border border-line px-5 py-2.5 font-display text-xs font-semibold text-muted transition hover:border-brand hover:text-brand">Used</button>
+        @foreach($productFilters as $filter)<button type="button" data-filter="{{ $filter['slug'] }}" aria-pressed="false" class="filter-button rounded-full border border-line px-5 py-2.5 font-display text-xs font-semibold text-muted transition hover:border-brand hover:text-brand">{{ $filter['name'] }}</button>@endforeach
+        <button type="button" data-filter="used" aria-pressed="false" class="filter-button rounded-full border border-line px-5 py-2.5 font-display text-xs font-semibold text-muted">Used</button>
       </div>
       <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         @foreach ($products as $item)
@@ -88,9 +85,11 @@
       </div>
       
     </x-site.container>
+  @if(!$products)<p class="site-container pb-8 text-center text-muted">Our machinery listings are being updated. <a href="{{ route('contact') }}" class="text-brand underline">Contact us about your requirements.</a></p>@endif
+  <p hidden data-filter-empty role="status" class="site-container pb-12 text-center text-muted">No featured machinery matches this category. <a class="text-brand underline" href="#contact">Contact us about availability.</a></p><x-site.container class="mt-8 text-center"><a href="{{ route('machinery.index') }}" class="font-semibold text-brand">View all machinery &rarr;</a></x-site.container>
   </section>
 
-  <p hidden data-filter-empty role="status" class="site-container pb-12 text-center text-muted">No featured machinery matches this category. <a class="text-brand underline" href="#contact">Contact us about availability.</a></p>
+
   <section class="stats-section relative overflow-hidden border-t-4 border-brand bg-ink py-22 text-stone-200 reveal">
     <x-site.container>
       <div class="relative z-10 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
@@ -107,10 +106,10 @@
 
   <section class="overflow-hidden border-b border-line bg-white py-18 reveal" id="brands">
     <x-site.container>
-      <h2>Official Dealer For</h2>
+      <h2>Brands We Supply</h2>
       <div class="flex flex-wrap items-center justify-center gap-5">
         @foreach ($brands as $brand)
-        <div class="rounded-xl border border-line px-6 py-3.5 font-display font-extrabold text-muted transition hover:border-brand hover:text-brand">{{ $brand }}</div>
+        <a href="{{ $brand['url'] }}" class="rounded-xl border border-line bg-white px-6 py-3.5 font-display font-extrabold text-muted transition hover:border-brand hover:text-brand">@if($brand['logo'])<img class="h-12 max-w-40 object-contain" src="{{ $brand['logo'] }}" alt="{{ $brand['name'] }}">@else{{ $brand['name'] }}@endif</a>
         @endforeach
 
       </div>
@@ -123,8 +122,8 @@
       <div class="about-visual relative rounded-card group">
         <x-site.image-placeholder label="Team / Workshop Photo" />
         <div class="about-badge absolute -bottom-5 right-0 rounded-card bg-brand px-7 py-5 font-display text-white shadow-xl lg:-right-5">
-          <div class="num">40+</div>
-          <div class="lbl">Years in Business</div>
+          <div class="num">2006</div>
+          <div class="lbl">Established</div>
         </div>
       </div>
       <div class="relative">
@@ -174,6 +173,7 @@
     </x-site.container>
   </section>
 
+  @if($usedMachines)
   <section class="section-bottom reveal" id="used">
     <x-site.container>
       <x-site.heading eyebrow="New in Used" title="Quality Pre-Owned Machinery"  />
@@ -185,11 +185,12 @@
       </div>
     </x-site.container>
   </section>
+  @endif
 
   <section class="section-bottom relative overflow-hidden reveal">
     <div class="blob pointer-events-none absolute rounded-full blob-red blob-1"></div>
     <x-site.container>
-      <x-site.heading eyebrow="What Farmers Say" title="Trusted by Farmers Across Ulster" description="Real feedback from customers who rely on us season after season." :centered="true" />
+      <x-site.heading eyebrow="What Farmers Say" title="Trusted by Farmers Across Ulster" description="Feedback shared with our machinery range." :centered="true" />
       <div class="relative grid gap-5 lg:grid-cols-3">
         @foreach ($testimonials as $item)
 <x-site.testimonial-card :item="$item" />

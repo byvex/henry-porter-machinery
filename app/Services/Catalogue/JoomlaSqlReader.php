@@ -17,7 +17,7 @@ class JoomlaSqlReader
     /**
      * @return array{prefix: string, tables: array<string, list<array<string, string|null>>>, checksum: string}
      */
-    public function read(string $path): array
+    public function read(string $path, bool $siteContent = false): array
     {
         $handle = fopen($path, 'rb');
         if ($handle === false) {
@@ -35,9 +35,10 @@ class JoomlaSqlReader
                 throw new RuntimeException('No VirtueMart products table was found in the dump.');
             }
             rewind($handle);
-            $allowed = array_combine(array_map(fn ($name) => $prefix.$name, self::TABLES), self::TABLES);
+            $names = $siteContent ? array_merge(self::TABLES, ['content', 'k2_items']) : self::TABLES;
+            $allowed = array_combine(array_map(fn ($name) => $prefix.$name, $names), $names);
             $schemas = [];
-            $tables = array_fill_keys(self::TABLES, []);
+            $tables = array_fill_keys($names, []);
             $creating = null;
             $statement = '';
             $inserting = null;

@@ -21,7 +21,7 @@ class Category extends Model
     /** @return array<string, string> */
     protected function casts(): array
     {
-        return ['media_folder_date' => 'date', 'admin_modified_at' => 'datetime', 'is_active' => 'boolean'];
+        return ['media_folder_date' => 'date', 'admin_modified_at' => 'datetime', 'is_active' => 'boolean', 'show_on_homepage' => 'boolean'];
     }
 
     /** @return BelongsTo<Category, $this> */

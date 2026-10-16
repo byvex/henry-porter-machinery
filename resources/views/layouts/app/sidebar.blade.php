@@ -26,6 +26,7 @@
                 @can('manage-catalogue')
                 <flux:sidebar.group heading="Catalogue" class="grid">
                     <flux:sidebar.item icon="squares-2x2" :href="route('admin.dashboard')" :current="request()->routeIs('admin.dashboard')" wire:navigate>Overview</flux:sidebar.item>
+                    <flux:sidebar.item icon="envelope" :href="route('admin.enquiries.index')" :current="request()->routeIs('admin.enquiries.*')" wire:navigate>Enquiries</flux:sidebar.item>
                     @foreach(['products' => 'Products', 'categories' => 'Categories', 'brands' => 'Brands'] as $resource => $label)
                         <flux:sidebar.item icon="folder" :href="route('admin.catalogue.index', $resource)" :current="request()->route('resource') === $resource" wire:navigate>{{ $label }}</flux:sidebar.item>
                     @endforeach

@@ -59,7 +59,7 @@ class CatalogueEditor extends Component
         $this->id = $id;
         $class = app(CatalogueAdmin::class)->model($resource);
         $record = $id ? $class::findOrFail($id) : null;
-        $this->form = array_replace(['name' => '', 'slug' => '', 'sort_order' => 0, 'summary' => '', 'description_html' => '', 'description' => '', 'brand_id' => null, 'category_ids' => [], 'condition' => 'new', 'status' => 'draft', 'is_featured' => false, 'is_active' => true, 'parent_id' => null], $record ? $record->only(['name', 'slug', 'sort_order', 'summary', 'description_html', 'description', 'brand_id', 'condition', 'status', 'is_featured', 'is_active', 'parent_id']) : []);
+        $this->form = array_replace(['name' => '', 'slug' => '', 'sort_order' => 0, 'summary' => '', 'description_html' => '', 'description' => '', 'brand_id' => null, 'category_ids' => [], 'condition' => 'new', 'status' => 'draft', 'is_featured' => false, 'is_active' => true, 'show_on_homepage' => false, 'homepage_order' => 0, 'parent_id' => null], $record ? $record->only(['name', 'slug', 'sort_order', 'summary', 'description_html', 'description', 'brand_id', 'condition', 'status', 'is_featured', 'is_active', 'parent_id', 'show_on_homepage', 'homepage_order']) : []);
         if ($record && ! ($record instanceof Product)) {
             $this->form['image_alt_text'] = $record->image->alt_text ?? '';
             if ($record instanceof Brand) {
