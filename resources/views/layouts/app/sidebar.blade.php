@@ -2,11 +2,18 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
     <head>
         @include('partials.head')
+        @if(request()->routeIs('admin.*'))
+            <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v={{ filemtime(public_path('css/admin.css')) }}">
+        @endif
     </head>
     <body class="min-h-screen bg-white dark:bg-zinc-800">
         <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
             <flux:sidebar.header>
-                <x-app-logo :sidebar="true" href="{{ route('dashboard') }}" wire:navigate />
+                @if(request()->routeIs('admin.*'))
+                    <a href="{{ route('admin.dashboard') }}" wire:navigate class="flex items-center gap-3 font-semibold"><span class="admin-logo">HP</span><span class="text-sm leading-tight">Henry Porter<br><span class="text-xs font-normal text-zinc-500 dark:text-zinc-400">Machinery</span></span></a>
+                @else
+                    <x-app-logo :sidebar="true" href="{{ route('dashboard') }}" wire:navigate />
+                @endif
                 <flux:sidebar.collapse class="lg:hidden" />
             </flux:sidebar.header>
 
@@ -16,18 +23,20 @@
                         {{ __('Dashboard') }}
                     </flux:sidebar.item>
                 </flux:sidebar.group>
+                @can('manage-catalogue')
+                <flux:sidebar.group heading="Catalogue" class="grid">
+                    <flux:sidebar.item icon="squares-2x2" :href="route('admin.dashboard')" :current="request()->routeIs('admin.dashboard')" wire:navigate>Overview</flux:sidebar.item>
+                    @foreach(['products' => 'Products', 'categories' => 'Categories', 'brands' => 'Brands'] as $resource => $label)
+                        <flux:sidebar.item icon="folder" :href="route('admin.catalogue.index', $resource)" :current="request()->route('resource') === $resource" wire:navigate>{{ $label }}</flux:sidebar.item>
+                    @endforeach
+                </flux:sidebar.group>
+                @endcan
             </flux:sidebar.nav>
 
             <flux:spacer />
 
             <flux:sidebar.nav>
-                <flux:sidebar.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                    {{ __('Repository') }}
-                </flux:sidebar.item>
-
-                <flux:sidebar.item icon="book-open-text" href="https://laravel.com/docs/starter-kits#livewire" target="_blank">
-                    {{ __('Documentation') }}
-                </flux:sidebar.item>
+                <flux:sidebar.item icon="arrow-top-right-on-square" :href="route('home')" target="_blank">View website</flux:sidebar.item>
             </flux:sidebar.nav>
 
             <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()->name" />
