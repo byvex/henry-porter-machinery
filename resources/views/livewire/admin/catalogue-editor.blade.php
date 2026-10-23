@@ -10,7 +10,7 @@
                         <x-admin.field label="Name"><input required maxlength="255" class="admin-input" wire:model="form.name"></x-admin.field>
                         <x-admin.field label="URL slug" hint="Leave blank to generate from the name. Existing slugs remain stable when renaming."><input class="admin-input" wire:model="form.slug"></x-admin.field>
                         @if($resource === 'products')<x-admin.field label="Short description"><textarea class="admin-input" rows="3" wire:model="form.summary"></textarea></x-admin.field>@endif
-                        <x-admin.field label="Description HTML" hint="Paragraphs, lists, links, images and specification tables are supported. Unsafe markup is removed when saving."><textarea class="admin-input font-mono text-sm" rows="12" wire:model.blur="form.{{ $resource === 'products' ? 'description_html' : 'description' }}"></textarea></x-admin.field>
+                        <x-admin.rich-text label="Description" hint="Use the visual editor or switch to HTML source. Paragraphs, lists, links, images and specification tables are supported; unsafe markup is removed when saving." :model="'form.'.($resource === 'products' ? 'description_html' : 'description')" :gallery="$resource === 'products' ? $gallery : []" />
                         <details class="rounded-lg border border-zinc-200 p-4 dark:border-zinc-700"><summary class="cursor-pointer text-sm font-medium">Preview description</summary><div class="admin-preview mt-4">{!! $preview !!}</div></details>
                     </div>
                 </x-admin.panel>

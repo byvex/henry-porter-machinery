@@ -225,4 +225,29 @@ class CatalogueAdminTest extends TestCase
         $this->assertSame([$path], Storage::disk('public')->allFiles());
         $this->assertDatabaseCount('media_assets', 1);
     }
+
+    public function test_rich_text_editor_renders_and_preserves_backward_compatible_html(): void
+    {
+        $this->admin();
+        Storage::fake('public');
+        foreach (['products', 'categories', 'brands'] as $resource) {
+            $this->get('/admin/'.$resource.'/create')
+                ->assertOk()
+                ->assertSee('data-admin-rich-text', false)
+                ->assertSee('Visual')
+                ->assertSee('HTML');
+        }
+
+        $legacyHtml = '<h2>Specifications</h2><p>Heavy duty <strong>mower</strong> with <em>conditioner</em>, <u>warranty</u>, m<sup>2</sup> &amp; H<sub>2</sub>O.</p><ol start="3"><li><p>Fast hitch</p></li></ol><table><thead><tr><th colspan="2"><p>Dimensions</p></th></tr></thead><tbody><tr><td>Working width</td><td rowspan="2"><p>3.0 m</p></td></tr></tbody></table><p><a href="https://henryportermachinery.co.uk/parts" title="Parts enquiry">Parts</a></p><p><img src="/storage/products/2026/10-23/spec.jpg" alt="Spec diagram"></p>';
+        $product = app(CatalogueAdmin::class)->save('products', null, $this->form(['description_html' => $legacyHtml]), [], [], [], ['images' => [UploadedFile::fake()->image('gallery.jpg')]]);
+
+        $component = Livewire::test(CatalogueEditor::class, ['resource' => 'products', 'id' => $product->id])
+            ->assertSee('data-admin-rich-text', false)
+            ->assertSee('Or pick an existing gallery image:')
+            ->assertSet('form.description_html', $legacyHtml);
+
+        $component->call('save')->assertHasNoErrors();
+        $saved = $product->fresh()->description_html;
+        $this->assertSame($legacyHtml, $saved);
+    }
 }

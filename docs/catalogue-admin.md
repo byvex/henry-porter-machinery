@@ -16,6 +16,8 @@ Uploads accept JPEG, PNG, WebP, GIF and AVIF up to 10 MB each, with at most 20 n
 
 Removing or replacing an image detaches it without deleting shared files. Product deletion is recoverable through the deleted-products filter. Brand/category deletion is blocked while referenced; deactivate these instead. Hidden template/content records remain excluded from public catalogue queries even if their publication field is changed.
 
+Product, category and brand descriptions include a Tiptap visual editor with a **Visual / HTML** mode toggle. Existing imported HTML (including specification tables, cell spans and embedded `/storage/...` images) remains untouched until edited, and all saved markup continues to pass through `CatalogueHtml` server-side sanitisation.
+
 ## Import compatibility
 
 UUIDv7 identifies Laravel application records; source IDs remain separate integers. Infrastructure keys retain their framework formats. These migrations target the agreed local database rebuild; they are not an in-place conversion of an existing deployed integer-key database.
