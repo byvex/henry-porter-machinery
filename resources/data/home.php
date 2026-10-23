@@ -28,44 +28,44 @@ return [
     ],
     'trustItems' => [
         0 => [
-            'icon' => '🛡️',
+            'icon' => 'verified_user',
             'title' => 'Genuine Parts Guarantee',
         ],
         1 => [
-            'icon' => '🔧',
+            'icon' => 'build',
             'title' => 'Expert Service Network',
         ],
         2 => [
-            'icon' => '📍',
+            'icon' => 'location_on',
             'title' => 'Northern Ireland Based',
         ],
         3 => [
-            'icon' => '⭐',
+            'icon' => 'agriculture',
             'title' => '40+ Years Combined Experience',
         ],
     ],
     'steps' => [
         0 => [
             'number' => 'STEP 01',
-            'icon' => '💬',
+            'icon' => 'forum',
             'title' => 'Consultation',
             'description' => 'We discuss your requirements and recommend the right machine for the job.',
         ],
         1 => [
             'number' => 'STEP 02',
-            'icon' => '📋',
+            'icon' => 'request_quote',
             'title' => 'Quotation',
             'description' => 'Transparent pricing with options on new or quality pre-owned machinery.',
         ],
         2 => [
             'number' => 'STEP 03',
-            'icon' => '🚚',
+            'icon' => 'local_shipping',
             'title' => 'Delivery & Setup',
             'description' => 'Delivered to your farm, fully commissioned and ready to work.',
         ],
         3 => [
             'number' => 'STEP 04',
-            'icon' => '🔧',
+            'icon' => 'handyman',
             'title' => 'Ongoing Support',
             'description' => 'Genuine parts, servicing, and repairs whenever you need them.',
         ],

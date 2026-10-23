@@ -1,4 +1,14 @@
 @props(['title' => 'Henry Porter Machinery | Agricultural Machinery Northern Ireland', 'description' => 'Premium agricultural machinery, genuine parts and expert service from Henry Porter Machinery in Hillsborough, Northern Ireland.', 'image'=>null, 'noindex'=>false])
+@php
+    $navLinks = [
+        ['label' => 'New Machinery', 'href' => route('machinery.new'), 'active' => request()->routeIs('machinery.new')],
+        ['label' => 'Used Machinery', 'href' => route('machinery.used'), 'active' => request()->routeIs('machinery.used')],
+        ['label' => 'Brands', 'href' => route('brands.index'), 'active' => request()->routeIs('brands.*')],
+        ['label' => 'Parts', 'href' => route('parts'), 'active' => request()->routeIs('parts')],
+        ['label' => 'About', 'href' => route('about'), 'active' => request()->routeIs('about')],
+        ['label' => 'News', 'href' => route('news.index'), 'active' => request()->routeIs('news.*')],
+    ];
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,8 +33,9 @@
 </head>
 <body class="public-site bg-canvas font-body text-ink antialiased">
 <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-white focus:p-4">Skip to content</a>
-<x-site.header />
+<x-site.header :links="$navLinks" />
 <main id="main-content">{{ $slot }}</main>
 <x-site.footer />
+<x-site.mobile-menu :links="$navLinks" />
 </body>
 </html>

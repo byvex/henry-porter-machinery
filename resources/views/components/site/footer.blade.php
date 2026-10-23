@@ -31,9 +31,9 @@
         <div>
           <h4>Contact</h4>
           <ul>
-            <li><a href="tel:+442892622611">📞 (028) 9262 2611</a></li>
-            <li><a class="break-words" href="mailto:info@henryportermachinery.co.uk">📧 info@henryportermachinery.co.uk</a></li>
-            <li>📍 46 St James Road, Hillsborough</li>
+            <li><a class="inline-flex items-start gap-2" href="tel:+442892622611"><x-icon.call class="mt-0.5 size-4 text-brand-light" />(028) 9262 2611</a></li>
+            <li><a class="inline-flex min-w-0 items-start gap-2" href="mailto:info@henryportermachinery.co.uk"><x-icon.mail class="mt-0.5 size-4 text-brand-light" /><span class="min-w-0 break-words">info@henryportermachinery.co.uk</span></a></li>
+            <li class="flex items-start gap-2"><x-icon.location-on class="mt-0.5 size-4 text-brand-light" />46 St James Road, Hillsborough</li>
           </ul>
         </div>
       </div>

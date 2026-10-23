@@ -4,6 +4,6 @@
           <div class="p-5">
             <h3 class="mb-2 font-display text-lg font-bold leading-snug">{{ $item['title'] }}</h3>
             <p class="mb-4 text-sm leading-relaxed text-muted">{{ $item['description'] }}</p>
-            <a href="{{ $item['url'] ?? route('contact') }}" class="mt-3.5 inline-flex items-center gap-2 font-display text-sm font-extrabold text-brand">Enquire for Price →</a>
+            <a href="{{ $item['url'] ?? route('contact') }}" class="mt-3.5 inline-flex items-center gap-2 font-display text-sm font-extrabold text-brand">Enquire for Price <x-icon.arrow-forward class="size-4 icon-nudge" /></a>
           </div>
         </div>

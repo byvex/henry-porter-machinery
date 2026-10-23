@@ -80,7 +80,7 @@ class PublicCatalogue
         $filters = $featured->flatMap(fn ($p) => $p->categories)->where('is_active', true)->unique('id')->sortBy('sort_order');
         $data['productFilters'] = $filters->map(fn ($c) => ['slug' => $c->slug, 'name' => $c->name])->values()->all();
         $data['statistics'] = [['value' => 2006, 'suffix' => '', 'label' => 'Established'], ['value' => Brand::where('is_active', true)->count(), 'suffix' => '', 'label' => 'Brands in Our Range'], ['value' => Product::catalogue()->count(), 'suffix' => '', 'label' => 'Machines to Explore'], ['value' => Product::catalogue()->where('condition', 'used')->count(), 'suffix' => '', 'label' => 'Used Machines']];
-        $data['trustItems'][3] = ['icon' => "\u{2605}", 'title' => 'Serving Farmers Since 2006'];
+        $data['trustItems'][3] = ['icon' => 'agriculture', 'title' => 'Serving Farmers Since 2006'];
         $data['faqs'][1]['answer'] = 'Our range includes '.Brand::where('is_active', true)->orderBy('sort_order')->pluck('name')->implode(', ').'. Contact us for advice on the right machine.';
         $data['testimonials'] = ProductTestimonial::whereHas('product', fn ($q) => $q->catalogue())->get()->unique('content_html')->take(3)->map(fn ($t) => ['html' => $t->content_html])->values()->all();
         $data['news'] = array_slice(app(SiteContent::class)->news(), 0, 2);

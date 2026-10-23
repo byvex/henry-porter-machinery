@@ -77,3 +77,72 @@
 @keyframes site-gradient { 50% { background-position: 100% 50%; } }
 @media (prefers-reduced-motion: no-preference) { html:has(.public-site) { scroll-behavior: smooth; } }
 @media (prefers-reduced-motion: reduce) { .public-site *, .public-site *::before, .public-site *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+/* Material icon arrows: small directional nudge on hover/focus (disabled for reduced motion). */
+.icon-nudge { transition: transform .2s ease; }
+a:hover > .icon-nudge, a:focus-visible > .icon-nudge { transform: translateX(3px); }
+a:hover > .icon-nudge--down, a:focus-visible > .icon-nudge--down { transform: translateY(3px); }
+a:hover > .icon-nudge--outward, a:focus-visible > .icon-nudge--outward { transform: translate(2px, -2px); }
+@media (prefers-reduced-motion: reduce) { .icon-nudge { transition: none; transform: none !important; } }
+
+/* Modern Mobile Off-Canvas Drawer & Animated Menu Toggle */
+.nav-toggle-icon {
+  position: relative;
+  width: 22px;
+  height: 18px;
+  display: inline-block;
+}
+.nav-toggle-bar {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: currentColor;
+  border-radius: 9999px;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, top 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.nav-toggle-bar:nth-child(1) { top: 1px; }
+.nav-toggle-bar:nth-child(2) { top: 8px; }
+.nav-toggle-bar:nth-child(3) { top: 15px; }
+
+.menu-open .nav-toggle-bar:nth-child(1) {
+  top: 8px;
+  transform: rotate(45deg);
+}
+.menu-open .nav-toggle-bar:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.menu-open .nav-toggle-bar:nth-child(3) {
+  top: 8px;
+  transform: rotate(-45deg);
+}
+
+.mobile-drawer {
+  pointer-events: none;
+}
+.mobile-drawer.is-active {
+  pointer-events: auto;
+}
+.mobile-drawer-backdrop {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s ease;
+}
+.mobile-drawer-panel {
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-drawer.is-active .mobile-drawer-backdrop {
+  opacity: 1;
+  visibility: visible;
+}
+.mobile-drawer.is-active .mobile-drawer-panel {
+  transform: translateX(0);
+}
+
+body.mobile-menu-locked {
+  overflow: hidden;
+  touch-action: none;
+}
+

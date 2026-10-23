@@ -10,7 +10,7 @@
             <p class="mb-4 text-sm leading-relaxed text-muted">{{ $item['description'] }}</p>
             <div class="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4">
               <div class="font-display font-extrabold text-ink"><span class="text-sm">Talk to our team</span></div>
-              <a href="{{ $item['url'] ?? route('contact') }}" class="inline-flex rounded-full border border-brand px-4 py-2 font-display text-xs font-bold text-brand transition hover:bg-brand hover:text-white">View Details →</a>
+              <a href="{{ $item['url'] ?? route('contact') }}" class="inline-flex items-center gap-1.5 rounded-full border border-brand px-4 py-2 font-display text-xs font-bold text-brand transition hover:bg-brand hover:text-white">View Details <x-icon.arrow-forward class="size-4 icon-nudge" /></a>
             </div>
           </div>
         </div>
