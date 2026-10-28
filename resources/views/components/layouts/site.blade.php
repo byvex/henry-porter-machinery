@@ -19,6 +19,14 @@
 <link rel="canonical" href="{{ $canonical }}">
 <meta name="robots" content="{{ $noindex || request()->hasAny(['q','brands','categories','condition','sort']) ? 'noindex,follow' : 'index,follow' }}">
 <meta property="og:title" content="{{ $title }}"><meta property="og:description" content="{{ $description }}"><meta property="og:url" content="{{ $canonical }}"><meta property="og:type" content="website">@if($image)<meta property="og:image" content="{{ str_starts_with($image,'/') ? rtrim(config('app.url'),'/').$image : $image }}">@endif
+<meta name="twitter:card" content="{{ $image ? 'summary_large_image' : 'summary' }}">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $description }}">
+@if($image)
+<meta name="twitter:image" content="{{ str_starts_with($image,'/') ? rtrim(config('app.url'),'/').$image : $image }}">
+@endif
+<x-site.schema-local-business />
+@stack('schema')
 <link rel="stylesheet" href="{{ asset('css/catalogue.css') }}?v={{ filemtime(public_path('css/catalogue.css')) }}">
 <script src="{{ asset('js/catalogue.js') }}?v={{ filemtime(public_path('js/catalogue.js')) }}" defer></script>
 <link rel="icon" href="/favicon.ico">

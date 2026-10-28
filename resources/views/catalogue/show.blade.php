@@ -1,4 +1,66 @@
 <x-layouts.site :title="$product->name.' | Henry Porter Machinery'" :description="Str::limit(strip_tags($product->summary ?: $product->description_html ?? ''),160)" :image="$product->coverImage()?->url()">
+@push('schema')
+@php
+    $productSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'Product',
+        'name' => $product->name,
+        'description' => strip_tags($product->summary ?: $product->description_html ?? ''),
+        'url' => route('machinery.show', $product->slug),
+        'category' => $product->categories->pluck('name')->implode(', '),
+        'itemCondition' => $product->condition === 'new' ? 'https://schema.org/NewCondition' : 'https://schema.org/UsedCondition',
+        'offers' => [
+            '@type' => 'Offer',
+            'priceCurrency' => 'GBP',
+            'availability' => 'https://schema.org/InStock',
+            'url' => route('machinery.show', $product->slug),
+            'seller' => [
+                '@type' => 'Organization',
+                'name' => 'Henry Porter Machinery',
+            ],
+        ],
+    ];
+    if ($product->coverImage()) {
+        $productSchema['image'] = $product->coverImage()->url();
+    }
+    if ($product->brand) {
+        $productSchema['brand'] = [
+            '@type' => 'Brand',
+            'name' => $product->brand->name,
+        ];
+    }
+    $breadcrumbSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'BreadcrumbList',
+        'itemListElement' => [
+            [
+                '@type' => 'ListItem',
+                'position' => 1,
+                'name' => 'Home',
+                'item' => route('home'),
+            ],
+            [
+                '@type' => 'ListItem',
+                'position' => 2,
+                'name' => 'Machinery',
+                'item' => route('machinery.index'),
+            ],
+            [
+                '@type' => 'ListItem',
+                'position' => 3,
+                'name' => $product->name,
+                'item' => route('machinery.show', $product->slug),
+            ],
+        ],
+    ];
+@endphp
+<script type="application/ld+json">
+{!! json_encode($productSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+</script>
+<script type="application/ld+json">
+{!! json_encode($breadcrumbSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+</script>
+@endpush
 <x-site.container class="py-10"><nav aria-label="Breadcrumb" class="mb-7 flex flex-wrap gap-2 text-xs text-muted"><a href="{{ route('home') }}">Home</a><span>/</span><a href="{{ route('machinery.index') }}">Machinery</a><span>/</span><span>{{ $product->name }}</span></nav>
 <div class="grid items-start gap-10 lg:grid-cols-2"><div data-gallery>@php($images=$product->media->sortBy('pivot.sort_order')->filter(fn($m)=>str_starts_with($m->mime_type,'image/'))->values())
 @if($images->isNotEmpty())<a href="{{ $images[0]->url() }}" data-gallery-open class="product-main-image block overflow-hidden rounded-card border border-line bg-white"><img data-gallery-main src="{{ $images[0]->url() }}" alt="{{ $images[0]->alt_text ?: $product->name }}" class="size-full object-contain"></a><p class="mt-3 text-xs text-muted">Select an image to enlarge.</p><div class="mt-4 grid grid-cols-4 gap-3">@foreach($images as $image)<a href="{{ $image->url() }}" data-gallery-thumb data-alt="{{ $image->alt_text ?: $product->name }}" aria-label="View image {{ $loop->iteration }}" class="product-thumb overflow-hidden rounded-xl border border-line bg-white"><img src="{{ $image->url() }}" alt="{{ $image->alt_text ?: $product->name }}" class="size-full object-contain" loading="lazy"></a>@endforeach</div>
