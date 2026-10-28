@@ -81,7 +81,7 @@ class CatalogueController extends Controller
             'new' => 'New Machinery','used' => 'Used Machinery',default => 'Explore Our Machinery'
         };
         $description = $entity ? trim(strip_tags($entity->description ?? '')) : '';
-        $description = $description ?: 'Explore dependable machinery for your farm, backed by practical advice and support from our Hillsborough team.';
+        $description = $description ?: 'Explore dependable machinery for your farm, backed by practical advice and support from our Lisburn team.';
         $image = $entity instanceof Brand ? $catalogue->brandCard($entity)['image'] : ($entity instanceof Category ? $catalogue->categoryCard($entity)['imageUrl'] : null);
 
         return view('catalogue.index', compact('products', 'filters', 'title', 'description', 'entity', 'condition', 'image') + ['catalogue' => $catalogue, 'brands' => Brand::where('is_active', true)->orderBy('sort_order')->get(), 'categories' => Category::where('is_active', true)->orderBy('sort_order')->get()]);
@@ -109,7 +109,7 @@ class CatalogueController extends Controller
 
     public function page(string $page, SiteContent $content): View
     {
-        abort_unless(in_array($page, ['parts', 'contact', 'cookie-policy'], true), 404);
+        abort_unless(in_array($page, ['parts', 'service', 'contact', 'cookie-policy'], true), 404);
 
         return view('site-page', ['page' => $page, 'data' => $content->data()['pages'][$page] ?? [], 'content' => $content]);
     }
@@ -130,7 +130,7 @@ class CatalogueController extends Controller
     /** @return list<string> */
     public function sitemapUrls(): array
     {
-        $urls = ['/', '/about', '/machinery', '/new-machinery', '/used-machinery', '/categories', '/brands', '/parts', '/contact', '/news', '/cookie-policy', '/sitemap'];
+        $urls = ['/', '/about', '/machinery', '/new-machinery', '/used-machinery', '/categories', '/brands', '/parts', '/service', '/contact', '/news', '/cookie-policy', '/sitemap'];
         foreach (['machinery' => Product::catalogue()->pluck('slug'), 'categories' => Category::where('is_active', true)->pluck('slug'), 'brands' => Brand::where('is_active', true)->pluck('slug')] as $prefix => $slugs) {
             foreach ($slugs as $slug) {
                 $urls[] = '/'.$prefix.'/'.$slug;

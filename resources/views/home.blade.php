@@ -16,7 +16,7 @@
         </h1>
         <p class="hero-description mb-9 max-w-xl text-base leading-relaxed text-white/70 sm:text-lg">
           Trusted dealer of Pottinger, Hustler, Strautmann, MultiOne and more.
-          Quality machinery, expert service, and genuine parts — all from our Hillsborough base.
+          Quality machinery, expert service, and genuine parts — all from our Lisburn base.
         </p>
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
           <x-site.button :href="route('machinery.index')" variant="primary" iconTrailing="arrow_forward">Browse Machinery</x-site.button>
@@ -130,7 +130,7 @@
         <span class="section-eyebrow">About Henry Porter</span>
         <h2>Rooted in Farming,<br>Driven by Service</h2>
         <p>
-          Based in Hillsborough, County Down, Henry Porter Machinery has grown from a
+          Based in Lisburn, County Antrim, Henry Porter Machinery has grown from a
           used tractor dealership into one of Northern Ireland's most trusted suppliers
           of premium agricultural machinery.
         </p>

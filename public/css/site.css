@@ -146,3 +146,13 @@ body.mobile-menu-locked {
   touch-action: none;
 }
 
+
+/* Desktop Navigation Dropdown */
+.nav-dropdown-wrapper {
+  position: relative;
+}
+.nav-dropdown-menu.is-open {
+  pointer-events: auto !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}

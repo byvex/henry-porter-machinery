@@ -1,4 +1,4 @@
-<x-layouts.site title="About Us | Henry Porter Machinery" description="Meet Henry and James Porter and discover the story of our family machinery business in Hillsborough, established in 2006.">
+<x-layouts.site title="About Us | Henry Porter Machinery" description="Meet Henry and James Porter and discover the story of our family machinery business in Lisburn, established in 2006.">
     <section class="about-hero relative overflow-hidden">
         <x-site.container class="relative">
             <nav aria-label="Breadcrumb" class="mb-10 text-xs text-muted sm:mb-14">
@@ -8,7 +8,7 @@
                 <div class="about-introduction">
                     <span class="section-eyebrow">Our story. Your next chapter.</span>
                     <h1 class="about-page-title mb-7 font-extrabold">Built on experience.<br>Grown through <span class="text-brand">trust.</span></h1>
-                    <p class="mb-8 max-w-lg text-base leading-relaxed text-muted sm:text-lg">A family machinery business in Hillsborough, County Down. Henry and James Porter bring a personal approach to finding your next machine.</p>
+                    <p class="mb-8 max-w-lg text-base leading-relaxed text-muted sm:text-lg">A family machinery business based in Lisburn, County Antrim. Henry and James Porter bring a personal approach to finding your next machine.</p>
                     <div class="flex flex-wrap gap-3">
                         <x-site.button href="#our-story" iconTrailing="arrow_downward">Discover our story</x-site.button>
                         <x-site.button href="#contact" variant="outline" iconTrailing="arrow_outward">Talk to our team</x-site.button>
@@ -24,7 +24,7 @@
                     </div>
                     <figcaption class="about-photo-caption absolute rounded-2xl border border-white/60 bg-white/95 px-6 py-5 shadow-xl backdrop-blur-md">
                         <span class="mb-1 block font-display text-sm font-bold">Two generations. One commitment.</span>
-                        <span class="text-xs text-muted">Henry &amp; James Porter · Hillsborough</span>
+                        <span class="text-xs text-muted">Henry &amp; James Porter · Lisburn</span>
                     </figcaption>
                     <div class="about-photo-index absolute right-5 top-5 rounded-full bg-ink/80 px-4 py-2 font-display text-xs font-semibold text-white backdrop-blur-md">Family run. Farmer focused.</div>
                 </figure>
@@ -36,7 +36,7 @@
         <x-site.container class="grid gap-5 py-7 text-center font-display text-xs font-semibold sm:grid-cols-3 sm:gap-8">
             <p><span class="mr-2 text-brand" aria-hidden="true">●</span> Established in 2006</p>
             <p><span class="mr-2 text-brand" aria-hidden="true">●</span> A family business</p>
-            <p><span class="mr-2 text-brand" aria-hidden="true">●</span> Hillsborough, County Down</p>
+            <p><span class="mr-2 text-brand" aria-hidden="true">●</span> Lisburn, County Antrim</p>
         </x-site.container>
     </div>
 
@@ -108,12 +108,12 @@
         <x-site.container class="grid gap-10 lg:grid-cols-2 lg:gap-18">
             <div class="reveal">
                 <span class="section-eyebrow">Come and say hello</span>
-                <h2 class="section-title mb-6">Find us in<br><span class="text-brand">Hillsborough.</span></h2>
+                <h2 class="section-title mb-6">Find us in<br><span class="text-brand">Lisburn.</span></h2>
                 <p class="mb-8 max-w-sm text-sm leading-relaxed text-muted">Have a machine in mind, or just exploring your options? Call ahead and let’s arrange a conversation.</p>
                 <x-site.button href="tel:+442892622611" iconTrailing="arrow_outward">Call (028) 9262 2611</x-site.button>
             </div>
             <div class="reveal grid gap-8 rounded-3xl border border-line bg-canvas p-8 sm:grid-cols-2 sm:p-10">
-                <div><p class="mb-4 font-display text-xs font-bold uppercase tracking-widest text-brand">Our address</p><address class="mb-5 text-sm not-italic leading-loose">46 St James Road<br>Hillsborough, Co. Down<br>BT26 6JT</address><a class="inline-flex gap-2 font-display text-xs font-bold text-brand underline-offset-4 hover:underline" href="https://www.google.com/maps/search/?api=1&amp;query=46+St+James+Road+Hillsborough+BT26+6JT" target="_blank" rel="noopener noreferrer">Get directions <x-icon.arrow-outward class="size-4 icon-nudge icon-nudge--outward" /></a></div>
+                <div><p class="mb-4 font-display text-xs font-bold uppercase tracking-widest text-brand">Our address</p><address class="mb-5 text-sm not-italic leading-loose">75 Cockhill Road<br>Lisburn, Co. Antrim<br>BT27 5RS</address><a class="inline-flex gap-2 font-display text-xs font-bold text-brand underline-offset-4 hover:underline" href="https://www.google.com/maps/search/?api=1&amp;query=75+Cockhill+Road+Lisburn+BT27+5RS" target="_blank" rel="noopener noreferrer">Get directions <x-icon.arrow-outward class="size-4 icon-nudge icon-nudge--outward" /></a></div>
                 <div><p class="mb-4 font-display text-xs font-bold uppercase tracking-widest text-brand">Opening hours</p><dl class="space-y-3 text-sm"><div><dt class="font-semibold">Monday – Friday</dt><dd class="text-muted">8:30am – 5:30pm</dd></div><div><dt class="font-semibold">Saturday</dt><dd class="text-muted">8:30am – 12:30pm</dd></div><div><dt class="font-semibold">Sunday</dt><dd class="text-muted">Closed</dd></div></dl></div>
             </div>
         </x-site.container>

@@ -1,12 +1,47 @@
-@props(['title' => 'Henry Porter Machinery | Agricultural Machinery Northern Ireland', 'description' => 'Premium agricultural machinery, genuine parts and expert service from Henry Porter Machinery in Hillsborough, Northern Ireland.', 'image'=>null, 'noindex'=>false])
+@props(['title' => 'Henry Porter Machinery | Agricultural Machinery Northern Ireland', 'description' => 'Premium agricultural machinery, genuine parts and expert service from Henry Porter Machinery in Lisburn, Northern Ireland.', 'image'=>null, 'noindex'=>false])
 @php
     $navLinks = [
-        ['label' => 'New Machinery', 'href' => route('machinery.new'), 'active' => request()->routeIs('machinery.new')],
+        [
+            'label' => 'New Machinery',
+            'href' => route('machinery.new'),
+            'active' => request()->routeIs('machinery.new') || request()->is('brands/pottinger*') || request()->is('brands/yardex*') || request()->is('brands/multione*') || request()->is('brands/hustler*') || request()->is('brands/bobman*'),
+            'children' => [
+                [
+                    'label' => 'Pottinger Grassland & Tillage',
+                    'sublabel' => 'Mowers, tedders, rakes, silage wagons & tillage',
+                    'href' => route('brands.show', 'pottinger'),
+                    'active' => request()->is('brands/pottinger*'),
+                ],
+                [
+                    'label' => 'Yardex',
+                    'sublabel' => 'Quality machinery and yard equipment',
+                    'href' => route('brands.show', 'yardex'),
+                    'active' => request()->is('brands/yardex*'),
+                ],
+                [
+                    'label' => 'MultiOne Compact Loaders',
+                    'sublabel' => 'Articulated mini loaders & multi-functional attachments',
+                    'href' => route('brands.show', 'multione'),
+                    'active' => request()->is('brands/multione*'),
+                ],
+                [
+                    'label' => 'Hustler Bale Handling',
+                    'sublabel' => 'Bale unrollers, feeders & handling solutions',
+                    'href' => route('brands.show', 'hustler'),
+                    'active' => request()->is('brands/hustler*'),
+                ],
+                [
+                    'label' => 'Bobman Cubicle Bedders',
+                    'sublabel' => 'Self-propelled cubicle cleaners & bedders',
+                    'href' => route('brands.show', 'bobman'),
+                    'active' => request()->is('brands/bobman*'),
+                ],
+            ],
+        ],
         ['label' => 'Used Machinery', 'href' => route('machinery.used'), 'active' => request()->routeIs('machinery.used')],
-        ['label' => 'Brands', 'href' => route('brands.index'), 'active' => request()->routeIs('brands.*')],
         ['label' => 'Parts', 'href' => route('parts'), 'active' => request()->routeIs('parts')],
+        ['label' => 'Service', 'href' => route('service'), 'active' => request()->routeIs('service')],
         ['label' => 'About', 'href' => route('about'), 'active' => request()->routeIs('about')],
-        ['label' => 'News', 'href' => route('news.index'), 'active' => request()->routeIs('news.*')],
     ];
 @endphp
 <!DOCTYPE html>

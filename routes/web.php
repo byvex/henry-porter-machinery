@@ -25,7 +25,7 @@ Route::get('/categories', fn () => app($catalogue)->directory('categories', app(
 Route::get('/categories/{slug}', [$catalogue, 'category'])->name('categories.show');
 Route::get('/brands', fn () => app($catalogue)->directory('brands', app(PublicCatalogue::class)))->name('brands.index');
 Route::get('/brands/{slug}', [$catalogue, 'brand'])->name('brands.show');
-foreach (['parts', 'contact', 'cookie-policy'] as $page) {
+foreach (['parts', 'service', 'contact', 'cookie-policy'] as $page) {
     Route::get('/'.$page, fn () => app($catalogue)->page($page, app(SiteContent::class)))->name($page);
 }
 Route::get('/news', [$catalogue, 'news'])->name('news.index');

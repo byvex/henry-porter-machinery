@@ -23,7 +23,7 @@ return [
         ],
         3 => [
             'question' => 'Can you service machinery on-farm?',
-            'answer' => 'Yes — our mobile service team covers all of Northern Ireland. For larger jobs, we also operate a fully equipped workshop at our Hillsborough premises.',
+            'answer' => 'Yes — our mobile service team covers all of Northern Ireland. For larger jobs, we also operate a fully equipped workshop at our Lisburn premises (75 Cockhill Road, Lisburn, BT27 5RS).',
         ],
     ],
     'trustItems' => [

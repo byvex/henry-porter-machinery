@@ -6,7 +6,7 @@
             Henry<span>Porter</span>
           </div>
           <p>
-            Premium agricultural machinery dealer based in Hillsborough,
+            Premium agricultural machinery dealer based in Lisburn,
             Northern Ireland. Serving farmers and contractors across the province.
           </p>
         </div>
@@ -17,6 +17,7 @@
             <li><a href="{{ route('machinery.used') }}">Used Machinery</a></li>
             <li><a href="{{ route('brands.index') }}">Brands</a></li>
             <li><a href="{{ route('parts') }}">Parts</a></li>
+            <li><a href="{{ route('service') }}">Service</a></li>
           </ul>
         </div>
         <div>
@@ -33,7 +34,7 @@
           <ul>
             <li><a class="inline-flex items-start gap-2" href="tel:+442892622611"><x-icon.call class="mt-0.5 size-4 text-brand-light" />(028) 9262 2611</a></li>
             <li><a class="inline-flex min-w-0 items-start gap-2" href="mailto:info@henryportermachinery.co.uk"><x-icon.mail class="mt-0.5 size-4 text-brand-light" /><span class="min-w-0 break-words">info@henryportermachinery.co.uk</span></a></li>
-            <li class="flex items-start gap-2"><x-icon.location-on class="mt-0.5 size-4 text-brand-light" />46 St James Road, Hillsborough</li>
+            <li class="flex items-start gap-2"><x-icon.location-on class="mt-0.5 size-4 text-brand-light" />75 Cockhill Road, Lisburn, BT27 5RS</li>
           </ul>
         </div>
       </div>

@@ -24,7 +24,7 @@
                 <aside class="auth-story" aria-label="Henry Porter Machinery">
                     <img src="{{ asset('images/about/henry-and-james.jpeg') }}" alt="Henry and James beside Pöttinger machinery" class="auth-story-image">
                     <div class="auth-story-content">
-                        <span class="auth-location">Hillsborough, Northern Ireland</span>
+                        <span class="auth-location">Lisburn, Northern Ireland</span>
                         <div>
                             <p class="auth-eyebrow">Serving farmers since 2006</p>
                             <h2>Rooted in farming.<br>Here for you.</h2>

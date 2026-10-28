@@ -11,10 +11,10 @@
         'priceRange' => '£££',
         'address' => [
             '@type' => 'PostalAddress',
-            'streetAddress' => '13 Carnbane Road',
-            'addressLocality' => 'Hillsborough',
-            'addressRegion' => 'Co. Down',
-            'postalCode' => 'BT26 6NQ',
+            'streetAddress' => '75 Cockhill Road',
+            'addressLocality' => 'Lisburn',
+            'addressRegion' => 'Co. Antrim',
+            'postalCode' => 'BT27 5RS',
             'addressCountry' => 'GB',
         ],
         'geo' => [
