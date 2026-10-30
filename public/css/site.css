@@ -156,3 +156,151 @@ body.mobile-menu-locked {
   opacity: 1 !important;
   visibility: visible !important;
 }
+
+/* Homepage Bottom Timed Tractor Animation (Window Pass) */
+.scroll-tracker {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+  z-index: 45;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.scroll-tracker.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.scroll-tracker.is-finished {
+  display: none !important;
+}
+
+.scroll-tracker-road {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: #22252a;
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.25);
+  transform: translateY(100%);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.scroll-tracker.road-up .scroll-tracker-road {
+  transform: translateY(0);
+}
+
+.scroll-tracker.road-down .scroll-tracker-road {
+  transform: translateY(100%);
+  transition: transform 0.6s cubic-bezier(0.7, 0, 0.84, 0);
+}
+
+.scroll-tracker-road-dashes {
+  position: absolute;
+  inset: 0;
+  height: 2px;
+  top: 3px;
+  background: repeating-linear-gradient(90deg, transparent 0, transparent 10px, rgba(255, 255, 255, 0.45) 10px, rgba(255, 255, 255, 0.45) 20px);
+}
+
+.scroll-tracker-vehicle {
+  position: absolute;
+  bottom: 1px;
+  left: 0;
+  width: 52px;
+  height: 38px;
+  transform: translateX(var(--scroll-x, -145px));
+  will-change: transform;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+}
+
+.scroll-tracker-vehicle .tractor-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: relative;
+  z-index: 2;
+}
+
+/* Headlights Light Cone & Flare (Angled Down onto Road) */
+.tractor-headlight-beam {
+  position: absolute;
+  left: 47px;
+  bottom: 0;
+  width: 80px;
+  height: 20px;
+  pointer-events: none;
+  z-index: 1;
+  clip-path: polygon(0% 16%, 100% 55%, 100% 100%, 35% 100%, 0% 28%);
+  background: linear-gradient(105deg, rgba(255, 250, 220, 0.85) 0%, rgba(254, 240, 138, 0.5) 25%, rgba(254, 240, 138, 0.15) 70%, transparent 100%);
+  filter: blur(0.8px);
+}
+
+.tractor-headlight-beam::before {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: 1px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 6px 2px rgba(254, 240, 138, 0.95), 0 0 14px 4px rgba(255, 255, 255, 0.7);
+}
+
+.tractor-headlight-beam::after {
+  content: '';
+  position: absolute;
+  left: 20px;
+  bottom: 0;
+  width: 60px;
+  height: 4px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(254, 240, 138, 0.5) 0%, rgba(254, 240, 138, 0.15) 60%, transparent 100%);
+  filter: blur(1px);
+}
+
+.tractor-wheel--rear {
+  transform-origin: 13px 27px;
+  transform: rotate(var(--rear-deg, 0deg));
+  will-change: transform;
+}
+
+.tractor-wheel--front {
+  transform-origin: 41px 30.5px;
+  transform: rotate(var(--front-deg, 0deg));
+  will-change: transform;
+}
+
+@media (max-width: 639px) {
+  .scroll-tracker {
+    height: 36px;
+  }
+  .scroll-tracker-road {
+    height: 7px;
+  }
+  .scroll-tracker-vehicle {
+    width: 40px;
+    height: 29px;
+    bottom: 0.5px;
+  }
+  .tractor-headlight-beam {
+    left: 36px;
+    bottom: 0;
+    width: 60px;
+    height: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-tracker {
+    display: none !important;
+  }
+}

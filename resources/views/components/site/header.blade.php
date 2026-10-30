@@ -16,7 +16,7 @@
                                 <x-icon.keyboard-arrow-down class="size-4 transition-transform duration-200 group-hover:rotate-180" />
                             </button>
                         </div>
-                        <div class="nav-dropdown-menu pointer-events-none opacity-0 invisible group-hover:pointer-events-auto group-hover:opacity-100 group-hover:visible group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-focus-within:visible absolute top-full left-0 mt-1 w-80 rounded-2xl border border-line bg-white/95 p-2 shadow-xl backdrop-blur-xl transition-all duration-200 z-50">
+                        <div class="nav-dropdown-menu pointer-events-none opacity-0 invisible group-hover:pointer-events-auto group-hover:opacity-100 group-hover:visible group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-focus-within:visible absolute top-full left-0 w-80 rounded-2xl border border-line bg-white/95 p-2 shadow-xl backdrop-blur-xl transition-all duration-200 z-50">
                             <div class="px-3 pt-2 pb-1.5 border-b border-line/60 flex items-center justify-between">
                                 <span class="font-display text-[11px] font-bold uppercase tracking-wider text-muted">New Equipment</span>
                                 <a href="{{ $link['href'] }}" class="text-xs font-semibold text-brand hover:underline">View All &rarr;</a>

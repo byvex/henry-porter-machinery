@@ -256,4 +256,5 @@
     </x-site.container>
   </section>
 
+  <x-site.scroll-tracker />
 </x-layouts.site>

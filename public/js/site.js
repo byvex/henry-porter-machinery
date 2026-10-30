@@ -125,7 +125,71 @@ function initializeSite() {
   if (empty) empty.hidden = count !== 0;
  };
  filters.forEach(button => button.addEventListener('click', () => filterProducts(button.dataset.filter)));
+
  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+ // Homepage Bottom Timed Tractor Animation (Window Pass)
+ const tracker = site.querySelector('[data-scroll-tracker]');
+ if (tracker && !tracker.dataset.started) {
+  tracker.dataset.started = 'true';
+  if (reducedMotion.matches) {
+   tracker.classList.add('is-finished');
+  } else {
+   const vehicle = tracker.querySelector('.scroll-tracker-vehicle');
+
+   setTimeout(() => {
+    const vehicleWidth = vehicle?.offsetWidth || 52;
+    const beamLength = 80;
+    const startX = -vehicleWidth - beamLength - 15; // ~ -147px
+    const endX = window.innerWidth + 20;
+    const totalDistance = endX - startX;
+    const cruiseDuration = 15000; // 15s steady realistic tractor cruise
+    let startTime = null;
+
+    tracker.style.setProperty('--scroll-x', `${startX}px`);
+
+    // Stage 1: Reveal container and slide the road up from below the viewport
+    tracker.classList.add('is-active', 'road-up');
+
+    // Stage 2: Once the road has slid up (600ms), start the tractor cruise from off-screen left
+    setTimeout(() => {
+     const animate = timestamp => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / cruiseDuration, 1);
+
+      const x = startX + progress * totalDistance;
+      const distanceTraveled = progress * totalDistance;
+
+      // Wheel rotation strictly bound to ground travel distance
+      const rearDeg = (distanceTraveled / 69.1) * 360;
+      const frontDeg = (distanceTraveled / 47.1) * 360;
+
+      tracker.style.setProperty('--scroll-x', `${x.toFixed(2)}px`);
+      tracker.style.setProperty('--rear-deg', `${rearDeg.toFixed(1)}deg`);
+      tracker.style.setProperty('--front-deg', `${frontDeg.toFixed(1)}deg`);
+
+      if (progress < 1) {
+       requestAnimationFrame(animate);
+      } else {
+       // Stage 3: Tractor has exited off-screen right; slide road down
+       tracker.classList.remove('road-up');
+       tracker.classList.add('road-down');
+
+       // Stage 4: Unmount once road slide-down finishes
+       setTimeout(() => {
+        tracker.classList.add('is-finished');
+        tracker.classList.remove('is-active', 'road-down');
+       }, 650);
+      }
+     };
+
+     requestAnimationFrame(animate);
+    }, 650);
+   }, 5000);
+  }
+ }
+
  if (!('IntersectionObserver' in window) || reducedMotion.matches) return;
  const reveal = new IntersectionObserver(entries => entries.forEach(entry => {
   if (entry.isIntersecting) { entry.target.classList.add('is-visible'); reveal.unobserve(entry.target); }
