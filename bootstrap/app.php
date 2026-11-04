@@ -13,6 +13,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->encryptCookies(except: [
+            'hpm_cookie_consent',
+        ]);
         $middleware->prepend(LegacyRedirect::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

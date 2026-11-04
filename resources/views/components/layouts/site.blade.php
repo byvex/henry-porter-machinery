@@ -80,5 +80,6 @@
 <main id="main-content">{{ $slot }}</main>
 <x-site.footer />
 <x-site.mobile-menu :links="$navLinks" />
+<x-site.cookie-consent />
 </body>
 </html>

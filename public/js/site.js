@@ -111,6 +111,68 @@ function initializeSite() {
   }
  });
 
+ // Cookie consent banner
+ const cookieBanner = site.querySelector('[data-cookie-banner]');
+ const cookieTriggers = site.querySelectorAll('[data-cookie-settings-trigger]');
+
+ if (cookieBanner) {
+  const getConsentCookie = () => {
+   const match = document.cookie.match(/(?:^|;\s*)hpm_cookie_consent=([^;]*)/);
+   return match ? decodeURIComponent(match[1]) : null;
+  };
+
+  const setConsentCookie = (val) => {
+   const maxAge = 365 * 24 * 60 * 60;
+   const secure = window.location.protocol === 'https:' ? '; Secure' : '';
+   document.cookie = `hpm_cookie_consent=${encodeURIComponent(val)}; max-age=${maxAge}; path=/; SameSite=Lax${secure}`;
+  };
+
+  const hideBanner = () => {
+   cookieBanner.classList.add('is-hidden');
+   setTimeout(() => {
+    if (cookieBanner.classList.contains('is-hidden')) {
+     cookieBanner.style.display = 'none';
+    }
+   }, 300);
+  };
+
+  const showBanner = () => {
+   cookieBanner.style.display = '';
+   void cookieBanner.offsetWidth;
+   cookieBanner.classList.remove('is-hidden');
+   const primaryBtn = cookieBanner.querySelector('[data-cookie-consent="accept"]') || cookieBanner.querySelector('button');
+   primaryBtn?.focus();
+  };
+
+  const currentConsent = getConsentCookie();
+  if (currentConsent) {
+   cookieBanner.classList.add('is-hidden');
+   cookieBanner.style.display = 'none';
+  } else {
+   cookieBanner.style.display = '';
+   requestAnimationFrame(() => {
+    cookieBanner.classList.remove('is-hidden');
+   });
+  }
+
+  cookieBanner.querySelector('[data-cookie-consent="accept"]')?.addEventListener('click', () => {
+   setConsentCookie('accepted');
+   hideBanner();
+  });
+
+  cookieBanner.querySelector('[data-cookie-consent="reject"]')?.addEventListener('click', () => {
+   setConsentCookie('rejected');
+   hideBanner();
+  });
+
+  cookieTriggers.forEach(btn => {
+   btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    showBanner();
+   });
+  });
+ }
+
  const featured = site.querySelector('[data-home-featured]');
  const filters = [...(featured?.querySelectorAll('[data-filter]') || [])];
  const products = [...(featured?.querySelectorAll('[data-product]') || [])];
@@ -127,6 +189,79 @@ function initializeSite() {
  filters.forEach(button => button.addEventListener('click', () => filterProducts(button.dataset.filter)));
 
  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+ // Homepage Hero Ambient Background Slideshow
+ const heroSlideshow = site.querySelector('[data-hero-slideshow]');
+ if (heroSlideshow && !heroSlideshow.dataset.slideshowInitialized) {
+  heroSlideshow.dataset.slideshowInitialized = 'true';
+  const slides = Array.from(heroSlideshow.querySelectorAll('[data-hero-slide]'));
+  if (slides.length > 1 && !reducedMotion.matches) {
+   let currentIndex = slides.findIndex(s => s.classList.contains('is-active'));
+   if (currentIndex < 0) currentIndex = 0;
+
+   const preloadImage = index => {
+    const nextImg = slides[index]?.querySelector('img');
+    if (nextImg && nextImg.loading === 'lazy') {
+     nextImg.loading = 'eager';
+    }
+   };
+   preloadImage((currentIndex + 1) % slides.length);
+
+   let timer = null;
+   const transitionDuration = 1200; // 1.2s cross-fade
+   const slideInterval = 6000; // 6s display interval
+
+   const nextSlide = () => {
+    const prevSlide = slides[currentIndex];
+    currentIndex = (currentIndex + 1) % slides.length;
+    const activeSlide = slides[currentIndex];
+
+    preloadImage((currentIndex + 1) % slides.length);
+
+    prevSlide.classList.remove('is-active');
+    prevSlide.classList.add('is-previous');
+
+    activeSlide.classList.add('is-active');
+
+    setTimeout(() => {
+     prevSlide.classList.remove('is-previous');
+    }, transitionDuration);
+   };
+
+   const startTimer = () => {
+    if (!timer) timer = setInterval(nextSlide, slideInterval);
+   };
+
+   const stopTimer = () => {
+    if (timer) {
+     clearInterval(timer);
+     timer = null;
+    }
+   };
+
+   startTimer();
+
+   document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+     stopTimer();
+    } else {
+     startTimer();
+    }
+   });
+
+   reducedMotion.addEventListener('change', e => {
+    if (e.matches) {
+     stopTimer();
+     slides.forEach((s, i) => {
+      s.classList.toggle('is-active', i === 0);
+      s.classList.remove('is-previous');
+     });
+    } else {
+     startTimer();
+    }
+   });
+  }
+ }
 
  // Homepage Bottom Timed Tractor Animation (Window Pass)
  const tracker = site.querySelector('[data-scroll-tracker]');

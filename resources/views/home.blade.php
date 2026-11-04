@@ -2,7 +2,20 @@
 
   <section class="hero">
     
-    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-slideshow" aria-hidden="true" data-hero-slideshow>
+      @forelse ($heroSlides ?? [] as $index => $slide)
+        <div class="hero-slide {{ $index === 0 ? 'is-active' : '' }}" data-hero-slide>
+          <img
+            src="{{ asset($slide['src']) }}"
+            alt="{{ $slide['alt'] ?? '' }}"
+            class="hero-slide-img"
+            {!! $index === 0 ? 'fetchpriority="high" loading="eager"' : 'loading="lazy"' !!}
+          >
+        </div>
+      @empty
+        <div class="hero-bg" aria-hidden="true"></div>
+      @endforelse
+    </div>
     
     <div class="hero-overlay" aria-hidden="true"></div>
 
@@ -73,9 +86,9 @@
     <x-site.container>
       <x-site.heading eyebrow="Featured Machinery" title="Featured Machinery" description="Browse our newest and most popular machinery — filter by category to find exactly what you need." :centered="true" />
       <div class="mb-10 flex flex-wrap gap-2.5" role="group" aria-label="Filter featured machinery">
-        <button type="button" data-filter="all" aria-pressed="true" class="filter-button rounded-full border border-line px-5 py-2.5 font-display text-xs font-semibold text-muted transition hover:border-brand hover:text-brand">All Products</button>
-        @foreach($productFilters as $filter)<button type="button" data-filter="{{ $filter['slug'] }}" aria-pressed="false" class="filter-button rounded-full border border-line px-5 py-2.5 font-display text-xs font-semibold text-muted transition hover:border-brand hover:text-brand">{{ $filter['name'] }}</button>@endforeach
-        <button type="button" data-filter="used" aria-pressed="false" class="filter-button rounded-full border border-line px-5 py-2.5 font-display text-xs font-semibold text-muted">Used</button>
+        <button type="button" data-filter="all" aria-pressed="true" class="filter-button rounded-full border border-line px-5 py-2.5 font-display text-xs font-semibold text-muted transition hover:border-brand hover:text-brand focus-visible:outline-none">All Products</button>
+        @foreach($productFilters as $filter)<button type="button" data-filter="{{ $filter['slug'] }}" aria-pressed="false" class="filter-button rounded-full border border-line px-5 py-2.5 font-display text-xs font-semibold text-muted transition hover:border-brand hover:text-brand focus-visible:outline-none">{{ $filter['name'] }}</button>@endforeach
+        <button type="button" data-filter="used" aria-pressed="false" class="filter-button rounded-full border border-line px-5 py-2.5 font-display text-xs font-semibold text-muted transition hover:border-brand hover:text-brand focus-visible:outline-none">Used</button>
       </div>
       <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         @foreach ($products as $item)

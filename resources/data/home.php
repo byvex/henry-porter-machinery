@@ -2,6 +2,40 @@
 
 // Static editorial content; catalogue sections are supplied by PublicCatalogue.
 return [
+    'heroSlides' => [
+        [
+            'src' => '/images/hero/henry-porter-machinery-1.jpg',
+            'alt' => 'Henry Porter Machinery stock and yard in Lisburn',
+        ],
+        [
+            'src' => '/images/hero/henry-porter-machinery-2.jpg',
+            'alt' => 'Agricultural machinery ready for delivery',
+        ],
+        [
+            'src' => '/images/hero/henry-porter-machinery-3.jpg',
+            'alt' => 'Tillage and grassland equipment in the yard',
+        ],
+        [
+            'src' => '/images/hero/henry-porter-machinery-4.jpg',
+            'alt' => 'High quality farm machinery lineup',
+        ],
+        [
+            'src' => '/images/hero/henry-porter-machinery-5.jpg',
+            'alt' => 'Farm equipment inventory at Henry Porter Machinery',
+        ],
+        [
+            'src' => '/images/hero/henry-porter-machinery-6.jpg',
+            'alt' => 'Pottinger and premium brand machinery on display',
+        ],
+        [
+            'src' => '/images/hero/henry-porter-machinery-7.jpg',
+            'alt' => 'Agricultural equipment dealership premises',
+        ],
+        [
+            'src' => '/images/hero/henry-porter-machinery-8.jpg',
+            'alt' => 'Fleming machinery lineup',
+        ],
+    ],
     'features' => [
         0 => 'Genuine Parts Only',
         1 => 'Expert Technicians',

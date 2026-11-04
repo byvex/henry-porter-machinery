@@ -45,7 +45,11 @@
           <span aria-label="Instagram">◐</span>
           <span aria-label="YouTube">▶</span>
         </div>
-        <div class="flex gap-4"><a href="{{ route('cookie-policy') }}">Cookie Policy</a><a href="{{ route('sitemap') }}">Sitemap</a></div>
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
+          <a href="{{ route('cookie-policy') }}">Cookie Policy</a>
+          <button type="button" class="cursor-pointer text-stone-300/70 transition hover:text-white" data-cookie-settings-trigger>Cookie Settings</button>
+          <a href="{{ route('sitemap') }}">Sitemap</a>
+        </div>
       </div>
     </x-site.container>
   </footer>
