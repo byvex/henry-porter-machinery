@@ -98,7 +98,7 @@ class JoomlaImporter
             }
             $fields = $brand;
             if (! Brand::withTrashed()->where('source_key', $brand['source_key'])->exists()) {
-                $homeOrder = array_search($brand['slug'], ['pottinger', 'bobman', 'hustler', 'multione', 'strautmann', 'fleming', 'sherpa'], true);
+                $homeOrder = array_search($brand['slug'], ['pottinger', 'bobman', 'hustler', 'multione', 'strautmann', 'fleming'], true);
                 $fields['show_on_homepage'] = $homeOrder !== false;
                 $fields['homepage_order'] = $homeOrder === false ? 0 : $homeOrder;
             }

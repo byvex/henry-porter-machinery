@@ -15,7 +15,7 @@ class EnquiryController extends Controller
 {
     public function store(Request $request): RedirectResponse
     {
-        $data = $request->validate(['name' => ['required', 'string', 'max:255'], 'email' => ['required', 'email', 'max:255'], 'phone' => ['nullable', 'string', 'max:50'], 'message' => ['required', 'string', 'min:10', 'max:10000'], 'product_id' => ['nullable', 'uuid'], 'submission_token' => ['required', 'uuid'], 'website' => ['nullable', 'string', 'max:255']]);
+        $data = $request->validate(['name' => ['required', 'string', 'max:255'], 'email' => ['required', 'email', 'max:255'], 'phone' => ['required', 'string', 'max:50'], 'message' => ['required', 'string', 'min:10', 'max:10000'], 'product_id' => ['nullable', 'uuid'], 'submission_token' => ['required', 'uuid'], 'website' => ['nullable', 'string', 'max:255']]);
         $key = hash('sha256', $data['submission_token']);
         $product = empty($data['product_id']) ? null : Product::catalogue()->whereKey($data['product_id'])->first();
         if (! empty($data['product_id']) && ! $product) {
@@ -35,7 +35,7 @@ class EnquiryController extends Controller
             throw ValidationException::withMessages(['message' => 'Please wait before sending another enquiry, or contact us by phone.']);
         }
         RateLimiter::hit('enquiry:'.$request->ip(), 600);
-        $enquiry = Enquiry::firstOrCreate(['submission_key' => $key], ['name' => trim($data['name']), 'email' => $data['email'], 'phone' => $data['phone'] ?? null, 'message' => strip_tags($data['message']), 'product_id' => $product?->id, 'product_name' => $product?->name, 'product_url' => $product ? rtrim(config('app.url'), '/').route('machinery.show', $product->slug, false) : null, 'notification_status' => config('enquiries.notifications_enabled') ? 'pending' : 'disabled']);
+        $enquiry = Enquiry::firstOrCreate(['submission_key' => $key], ['name' => trim($data['name']), 'email' => $data['email'], 'phone' => trim($data['phone']), 'message' => strip_tags($data['message']), 'product_id' => $product?->id, 'product_name' => $product?->name, 'product_url' => $product ? rtrim(config('app.url'), '/').route('machinery.show', $product->slug, false) : null, 'notification_status' => config('enquiries.notifications_enabled') ? 'pending' : 'disabled']);
         if ($enquiry->wasRecentlyCreated && config('enquiries.notifications_enabled')) {
             try {
                 NotifyEnquiry::dispatch($enquiry->id)->afterCommit();

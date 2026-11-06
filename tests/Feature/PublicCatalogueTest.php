@@ -98,6 +98,7 @@ class PublicCatalogueTest extends TestCase
         foreach (['/brands', '/categories', '/parts', '/contact', '/news', '/cookie-policy', '/sitemap'] as $path) {
             $this->get($path)->assertOk();
         }
+        $this->get('/contact')->assertOk()->assertDontSee('(optional)')->assertSee('name="phone"', false);
         $this->get('/machinery?q=mower')->assertHeader('X-Robots-Tag', 'noindex, follow');
     }
 
@@ -163,6 +164,9 @@ class PublicCatalogueTest extends TestCase
         $data = $this->enquiryData();
         $data['email'] = 'invalid';
         $this->post('/enquiries', $data)->assertSessionHasErrors('email');
+        $withoutPhone = $this->enquiryData();
+        unset($withoutPhone['phone']);
+        $this->post('/enquiries', $withoutPhone)->assertSessionHasErrors('phone');
     }
 
     public function test_rate_limit_and_unissued_tokens_cannot_create_extra_enquiries(): void

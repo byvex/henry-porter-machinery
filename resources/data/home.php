@@ -49,7 +49,7 @@ return [
         ],
         1 => [
             'question' => 'What brands do you stock?',
-            'answer' => 'We are official dealers for Pottinger, Hustler, Strautmann, MultiOne, Bobman, Bomford, and Sherpa. Our full range covers grassland, feeding, tillage, and compact loading equipment.',
+            'answer' => 'We are official dealers for Pottinger, Hustler, Strautmann, MultiOne, Bobman, and Bomford. Our full range covers grassland, feeding, tillage, and compact loading equipment.',
         ],
         2 => [
             'question' => 'Do you supply genuine parts?',
