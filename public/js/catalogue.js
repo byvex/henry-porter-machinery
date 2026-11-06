@@ -1,6 +1,85 @@
 document.addEventListener('DOMContentLoaded', () => {
- const filterPanel = document.querySelector('[data-catalogue-filters]');
- if (filterPanel) { const desktop = matchMedia('(min-width: 1024px)'); filterPanel.open = desktop.matches; desktop.addEventListener('change', event => { filterPanel.open = event.matches; }); }
+ const drawer = document.querySelector('[data-catalogue-filter-drawer]');
+ const backdrop = document.querySelector('[data-catalogue-drawer-backdrop]');
+ const triggers = document.querySelectorAll('[data-catalogue-filter-trigger]');
+ const closeBtn = document.querySelector('[data-catalogue-drawer-close]');
+
+ if (drawer) {
+  let lastFocused = null;
+  const isDesktop = () => window.matchMedia('(min-width: 1024px)').matches;
+
+  const openDrawer = (sourceTrigger) => {
+   if (isDesktop()) return;
+   lastFocused = sourceTrigger || document.activeElement;
+   drawer.classList.add('is-open');
+   if (backdrop) backdrop.classList.add('is-open');
+   document.body.classList.add('catalogue-filters-locked');
+   triggers.forEach(t => t.setAttribute('aria-expanded', 'true'));
+   const focusTarget = drawer.querySelector('[data-catalogue-drawer-close]') || drawer.querySelector('input, select, button');
+   if (focusTarget) {
+    setTimeout(() => focusTarget.focus(), 50);
+   }
+  };
+
+  const closeDrawer = () => {
+   drawer.classList.remove('is-open');
+   if (backdrop) backdrop.classList.remove('is-open');
+   document.body.classList.remove('catalogue-filters-locked');
+   triggers.forEach(t => t.setAttribute('aria-expanded', 'false'));
+   if (lastFocused && typeof lastFocused.focus === 'function') {
+    lastFocused.focus();
+    lastFocused = null;
+   }
+  };
+
+  triggers.forEach(trigger => {
+   trigger.addEventListener('click', (e) => {
+    e.preventDefault();
+    openDrawer(trigger);
+   });
+  });
+
+  if (closeBtn) {
+   closeBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    closeDrawer();
+   });
+  }
+
+  if (backdrop) {
+   backdrop.addEventListener('click', closeDrawer);
+  }
+
+  document.addEventListener('keydown', (e) => {
+   if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
+    e.preventDefault();
+    closeDrawer();
+   }
+  });
+
+  drawer.addEventListener('keydown', (e) => {
+   if (e.key !== 'Tab' || isDesktop() || !drawer.classList.contains('is-open')) return;
+   const focusables = Array.from(drawer.querySelectorAll('button:not([disabled]), input:not([disabled]), select:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])')).filter(el => el.offsetParent !== null);
+   if (!focusables.length) return;
+   const first = focusables[0];
+   const last = focusables[focusables.length - 1];
+   if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+   } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+   }
+  });
+
+  const desktopMql = window.matchMedia('(min-width: 1024px)');
+  desktopMql.addEventListener('change', (e) => {
+   if (e.matches && drawer.classList.contains('is-open')) {
+    closeDrawer();
+   }
+  });
+ }
+
  document.querySelectorAll('[data-gallery]').forEach(gallery => {
   const thumbs = [...gallery.querySelectorAll('[data-gallery-thumb]')];
   const main = gallery.querySelector('[data-gallery-main]');

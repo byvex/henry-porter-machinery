@@ -199,4 +199,25 @@ class PublicCatalogueTest extends TestCase
         Livewire::test(EnquiryInbox::class, ['id' => $enquiry->id])->set('status', 'read')->call('save')->assertHasNoErrors();
         $this->assertSame('read', $enquiry->fresh()->status);
     }
+
+    public function test_machinery_filters_render_mobile_drawer_and_floating_action_button(): void
+    {
+        $this->machine(['name' => 'Demo tractor']);
+
+        $res = $this->get('/machinery');
+        $res->assertOk();
+        $res->assertSee('data-catalogue-filter-drawer', false);
+        $res->assertSee('data-catalogue-drawer-backdrop', false);
+        $res->assertSee('data-catalogue-filter-trigger', false);
+        $res->assertSee('catalogue-filter-fab', false);
+        $res->assertSee('catalogue-drawer-close', false);
+        $res->assertDontSee('<details data-catalogue-filters', false);
+        $res->assertDontSee('<summary', false);
+
+        $filteredRes = $this->get('/machinery?q=Demo&condition=new');
+        $filteredRes->assertOk();
+        $filteredRes->assertSee('2 filters active');
+        $filteredRes->assertSee('catalogue-filter-fab-badge', false);
+        $filteredRes->assertSee('Reset all filters');
+    }
 }
