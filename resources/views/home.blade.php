@@ -49,25 +49,25 @@
 
   <div class="overflow-hidden border-y border-white/10 bg-brand py-4 text-white">
     <div class="marquee-track">
-      <div class="flex items-center gap-12">
+      <div class="flex items-center gap-10">
         @foreach ($brands as $brand)
-          <a href="{{ $brand['url'] }}" class="inline-flex items-center px-2 py-1 transition hover:opacity-80" title="{{ $brand['name'] }}">
+          <a href="{{ $brand['url'] }}" class="inline-flex h-11 items-center justify-center rounded-lg bg-white px-3.5 py-1.5 shadow-xs transition hover:opacity-90 hover:shadow-sm" title="{{ $brand['name'] }}">
             @if(!empty($brand['logo']))
-              <img src="{{ $brand['logo'] }}" alt="{{ $brand['name'] }}" class="h-7 w-auto max-w-28 brightness-0 invert object-contain">
+              <img src="{{ $brand['logo'] }}" alt="{{ $brand['name'] }}" class="h-6 w-auto max-w-28 object-contain">
             @else
-              <span class="font-display text-sm font-bold uppercase tracking-wider text-white">{{ $brand['name'] }}</span>
+              <span class="font-display text-xs font-bold uppercase tracking-wider text-charcoal">{{ $brand['name'] }}</span>
             @endif
           </a>
           <span class="size-1.5 shrink-0 rounded-full bg-white/60" aria-hidden="true"></span>
         @endforeach
       </div>
-      <div class="flex items-center gap-12" aria-hidden="true" inert>
+      <div class="flex items-center gap-10" aria-hidden="true" inert>
         @foreach ($brands as $brand)
-          <a href="{{ $brand['url'] }}" class="inline-flex items-center px-2 py-1 transition hover:opacity-80" tabindex="-1">
+          <a href="{{ $brand['url'] }}" class="inline-flex h-11 items-center justify-center rounded-lg bg-white px-3.5 py-1.5 shadow-xs transition hover:opacity-90 hover:shadow-sm" tabindex="-1">
             @if(!empty($brand['logo']))
-              <img src="{{ $brand['logo'] }}" alt="{{ $brand['name'] }}" class="h-7 w-auto max-w-28 brightness-0 invert object-contain">
+              <img src="{{ $brand['logo'] }}" alt="{{ $brand['name'] }}" class="h-6 w-auto max-w-28 object-contain">
             @else
-              <span class="font-display text-sm font-bold uppercase tracking-wider text-white">{{ $brand['name'] }}</span>
+              <span class="font-display text-xs font-bold uppercase tracking-wider text-charcoal">{{ $brand['name'] }}</span>
             @endif
           </a>
           <span class="size-1.5 shrink-0 rounded-full bg-white/60" aria-hidden="true"></span>
