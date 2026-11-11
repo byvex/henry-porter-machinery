@@ -24,9 +24,9 @@
 .gallery-dialog::backdrop { background: #000c; }
 .gallery-dialog img { display: block; width: 100%; height: 78vh; object-fit: contain; }
 .gallery-dialog button { cursor: pointer; padding: .5rem; }
-.video-placeholder { min-height: 220px; }
-.video-placeholder iframe { width: 100%; aspect-ratio: 16/9; border: 0; border-radius: .8rem; }
-.video-placeholder video { width: 100%; aspect-ratio: 16/9; max-height: 480px; object-fit: contain; background: #000; border-radius: .8rem; }
+.video-placeholder { aspect-ratio: 16/9; width: 100%; position: relative; background: #181818; overflow: hidden; }
+.video-placeholder iframe, .video-placeholder video { width: 100%; height: 100%; aspect-ratio: 16/9; border: 0; display: block; border-radius: inherit; }
+.video-placeholder.is-playing { padding: 0 !important; }
 .enquiry-trap { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(100%); }
 .public-site input[type=checkbox] { accent-color: #c8102e; }
 .public-site a:focus-visible, .public-site button:focus-visible { outline: 2px solid #c8102e; outline-offset: 4px; }

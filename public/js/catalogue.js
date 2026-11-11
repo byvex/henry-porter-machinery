@@ -101,7 +101,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const wrapper = button.closest('[data-youtube]');
   const id = wrapper.dataset.youtube;
   if (!/^[a-zA-Z0-9_-]{11}$/.test(id)) return;
-  const frame = document.createElement('iframe'); frame.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1'; frame.title = 'Machinery demonstration on YouTube'; frame.allow = 'autoplay; encrypted-media; picture-in-picture'; frame.allowFullscreen = true; wrapper.replaceChildren(frame);
+  const frame = document.createElement('iframe');
+  frame.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1';
+  frame.title = 'Machinery demonstration on YouTube';
+  frame.allow = 'autoplay; encrypted-media; picture-in-picture';
+  frame.allowFullscreen = true;
+  frame.className = 'w-full h-full border-0 block';
+  wrapper.classList.add('is-playing');
+  wrapper.replaceChildren(frame);
  }));
  document.querySelectorAll('[data-local-video-play]').forEach(button => button.addEventListener('click', () => {
   const wrapper = button.closest('[data-local-video]');
@@ -113,8 +120,8 @@ document.addEventListener('DOMContentLoaded', () => {
   video.controls = true;
   video.autoplay = true;
   video.playsInline = true;
-  video.className = 'w-full h-full rounded-card object-contain bg-black';
-  wrapper.classList.remove('p-8', 'flex', 'flex-col', 'justify-between');
+  video.className = 'w-full h-full object-contain bg-black block';
+  wrapper.classList.add('is-playing');
   wrapper.replaceChildren(video);
  }));
 });
