@@ -286,7 +286,7 @@ class JoomlaCatalogueImportTest extends TestCase
     {
         $this->withoutVite();
         app(JoomlaImporter::class)->run($this->sandbox.'/backup', true);
-        $this->get('/')->assertOk()->assertSee('Premium Farm');
+        $this->get('/')->assertOk()->assertSee('used machinery');
         $this->get('/about')->assertOk()->assertSee('Built on experience.');
         $this->get('/about.html')->assertRedirect('/about');
         $this->get('/login')->assertOk();

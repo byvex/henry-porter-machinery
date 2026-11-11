@@ -14,7 +14,7 @@
                 ],
                 [
                     'label' => 'Yardex',
-                    'sublabel' => 'Quality machinery and yard equipment',
+                    'sublabel' => 'Mini diggers, handlers and tracked dumpers',
                     'href' => route('brands.show', 'yardex'),
                     'active' => request()->is('brands/yardex*'),
                 ],
@@ -25,8 +25,8 @@
                     'active' => request()->is('brands/multione*'),
                 ],
                 [
-                    'label' => 'Hustler Bale Handling',
-                    'sublabel' => 'Bale unrollers, feeders & handling solutions',
+                    'label' => 'Hustler Equipment',
+                    'sublabel' => 'Bale handling solutions including Unrollers and Softhands',
                     'href' => route('brands.show', 'hustler'),
                     'active' => request()->is('brands/hustler*'),
                 ],
@@ -35,6 +35,12 @@
                     'sublabel' => 'Self-propelled cubicle cleaners & bedders',
                     'href' => route('brands.show', 'bobman'),
                     'active' => request()->is('brands/bobman*'),
+                ],
+                [
+                    'label' => 'Other Machinery',
+                    'sublabel' => 'Fleming, Malone, Johnston shear grabs & yard equipment',
+                    'href' => route('categories.show', 'other-machinery'),
+                    'active' => request()->is('categories/other-machinery*'),
                 ],
             ],
         ],

@@ -282,15 +282,23 @@ class UpdateBobmanMultiOneCatalogue extends Command
             return $existing;
         }
 
-        $response = Http::timeout(60)->retry(2, 500)->withHeaders([
-            'User-Agent' => 'HenryPorterMachineryCatalogueUpdater/1.0',
-        ])->get($url);
+        if (str_starts_with($url, 'local:') || file_exists($url)) {
+            $localFile = str_starts_with($url, 'local:') ? substr($url, 6) : $url;
+            if (! file_exists($localFile)) {
+                throw new RuntimeException('Missing local asset file: '.$localFile);
+            }
+            $bytes = (string) file_get_contents($localFile);
+        } else {
+            $response = Http::timeout(60)->retry(2, 500)->withHeaders([
+                'User-Agent' => 'HenryPorterMachineryCatalogueUpdater/1.0',
+            ])->get($url);
 
-        if (! $response->successful()) {
-            throw new RuntimeException('Failed to download asset from '.$url.' (HTTP '.$response->status().')');
+            if (! $response->successful()) {
+                throw new RuntimeException('Failed to download asset from '.$url.' (HTTP '.$response->status().')');
+            }
+
+            $bytes = $response->body();
         }
-
-        $bytes = $response->body();
         if ($bytes === '') {
             throw new RuntimeException('Downloaded empty asset from '.$url);
         }

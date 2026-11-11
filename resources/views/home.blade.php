@@ -23,17 +23,15 @@
       <div class="relative z-10 max-w-3xl">
         <span class="section-eyebrow">Henry Porter Machinery</span>
         <h1 class="hero-title">
-          Premium Farm<br>
-          Machinery for<br>
-          <em>Northern Ireland</em>
+          Premium new &<br>
+          used machinery
         </h1>
         <p class="hero-description mb-9 max-w-xl text-base leading-relaxed text-white/70 sm:text-lg">
-          Trusted dealer of Pottinger, Hustler, Strautmann, MultiOne and more.
-          Quality machinery, expert service, and genuine parts — all from our Lisburn base.
+          Authorised dealers for Pottinger, Bobman, MultiOne, Yardex, Hustler and much more! Quality machinery, expert service and genuine parts.
         </p>
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
           <x-site.button :href="route('machinery.index')" variant="primary" iconTrailing="arrow_forward">Browse Machinery</x-site.button>
-          <x-site.button :href="route('brands.show','pottinger')" variant="ghost" icon="workspace_premium" iconFilled>Official Pottinger Dealer</x-site.button>
+          <x-site.button :href="route('contact')" variant="ghost" icon="forum">Contact Our Team</x-site.button>
         </div>
         <div class="mt-12 flex items-center gap-3 font-display text-xs font-semibold uppercase tracking-widest text-white/50">
           <span class="h-px w-10 bg-current"></span>
@@ -49,13 +47,31 @@
     </x-site.container>
   </section>
 
-  <div class="overflow-hidden border-y border-white/10 bg-brand py-5 text-white">
+  <div class="overflow-hidden border-y border-white/10 bg-brand py-4 text-white">
     <div class="marquee-track">
-      <div class="flex items-center gap-15">
-        @foreach ($brands as $brand)<a href="{{ $brand['url'] }}">{{ $brand['name'] }}</a><span class="size-1.5 shrink-0 rounded-full bg-white/60" aria-hidden="true"></span>@endforeach
+      <div class="flex items-center gap-12">
+        @foreach ($brands as $brand)
+          <a href="{{ $brand['url'] }}" class="inline-flex items-center px-2 py-1 transition hover:opacity-80" title="{{ $brand['name'] }}">
+            @if(!empty($brand['logo']))
+              <img src="{{ $brand['logo'] }}" alt="{{ $brand['name'] }}" class="h-7 w-auto max-w-28 brightness-0 invert object-contain">
+            @else
+              <span class="font-display text-sm font-bold uppercase tracking-wider text-white">{{ $brand['name'] }}</span>
+            @endif
+          </a>
+          <span class="size-1.5 shrink-0 rounded-full bg-white/60" aria-hidden="true"></span>
+        @endforeach
       </div>
-      <div class="flex items-center gap-15" aria-hidden="true" inert>
-        @foreach ($brands as $brand)<a href="{{ $brand['url'] }}">{{ $brand['name'] }}</a><span class="size-1.5 shrink-0 rounded-full bg-white/60" aria-hidden="true"></span>@endforeach
+      <div class="flex items-center gap-12" aria-hidden="true" inert>
+        @foreach ($brands as $brand)
+          <a href="{{ $brand['url'] }}" class="inline-flex items-center px-2 py-1 transition hover:opacity-80" tabindex="-1">
+            @if(!empty($brand['logo']))
+              <img src="{{ $brand['logo'] }}" alt="{{ $brand['name'] }}" class="h-7 w-auto max-w-28 brightness-0 invert object-contain">
+            @else
+              <span class="font-display text-sm font-bold uppercase tracking-wider text-white">{{ $brand['name'] }}</span>
+            @endif
+          </a>
+          <span class="size-1.5 shrink-0 rounded-full bg-white/60" aria-hidden="true"></span>
+        @endforeach
       </div>
     </div>
   </div>
@@ -249,7 +265,14 @@
           <h2>Stay in the Loop</h2>
           <p>New stock alerts, seasonal offers, and machinery news — straight to your inbox. No spam, just the good stuff.</p>
         </div>
-        <div class="relative z-10 min-w-0"><form class="newsletter-form relative z-10 flex flex-col gap-2.5 rounded-2xl border border-white/20 bg-white/15 p-2 backdrop-blur-md sm:flex-row sm:rounded-full" aria-describedby="newsletter-status"><label class="sr-only" for="newsletter-email">Your email address</label><input id="newsletter-email" type="email" placeholder="Your email address" disabled><button type="submit" disabled>Subscribe <x-icon.arrow-forward class="size-4" /></button></form><p id="newsletter-status" class="mt-3 text-sm text-white/80">Newsletter signup is currently unavailable. Please contact us for updates.</p></div>
+        <div class="relative z-10 min-w-0">
+          <form class="newsletter-form relative z-10 flex flex-col gap-2.5 rounded-2xl border border-white/20 bg-white/15 p-2 backdrop-blur-md sm:flex-row sm:rounded-full" aria-describedby="newsletter-status">
+            <label class="sr-only" for="newsletter-email">Your email address</label>
+            <input id="newsletter-email" type="email" placeholder="Your email address" disabled>
+            <button type="submit" disabled>Subscribe <x-icon.arrow-forward class="size-4 icon-nudge" /></button>
+          </form>
+          <p id="newsletter-status" class="mt-3 text-sm text-white/80">Newsletter signup is currently unavailable. Please contact us for updates.</p>
+        </div>
       </div>
     </x-site.container>
   </section>

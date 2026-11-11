@@ -1,7 +1,12 @@
 <div class="admin-shell space-y-6">
     <div class="flex flex-wrap items-end justify-between gap-4">
         <div><p class="admin-eyebrow">Catalogue</p><h1 class="mt-2 text-3xl font-semibold tracking-tight">{{ ucfirst($resource) }}</h1><p class="mt-2 text-sm text-zinc-500 dark:text-zinc-400">{{ $resource === 'products' ? 'Machinery, galleries and publication in one place.' : 'Keep your catalogue organised and easy to explore.' }}</p></div>
-        <a class="admin-primary" href="{{ route('admin.catalogue.create', $resource) }}" wire:navigate>Add {{ $resource === 'categories' ? 'category' : rtrim($resource, 's') }} <span aria-hidden="true">+</span></a>
+        <div class="flex items-center gap-2">
+            @if($resource === 'products')
+                <a class="admin-secondary inline-flex items-center gap-1.5" href="{{ route('admin.import-export') }}" wire:navigate>Import / Export</a>
+            @endif
+            <a class="admin-primary" href="{{ route('admin.catalogue.create', $resource) }}" wire:navigate>Add {{ $resource === 'categories' ? 'category' : rtrim($resource, 's') }} <span aria-hidden="true">+</span></a>
+        </div>
     </div>
     <x-admin.feedback />
     <div class="admin-panel space-y-4">

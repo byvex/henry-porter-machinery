@@ -30,6 +30,7 @@
                     @foreach(['products' => 'Products', 'categories' => 'Categories', 'brands' => 'Brands'] as $resource => $label)
                         <flux:sidebar.item icon="folder" :href="route('admin.catalogue.index', $resource)" :current="request()->route('resource') === $resource" wire:navigate>{{ $label }}</flux:sidebar.item>
                     @endforeach
+                    <flux:sidebar.item icon="arrow-path-rounded-square" :href="route('admin.import-export')" :current="request()->routeIs('admin.import-export')" wire:navigate>Import / Export</flux:sidebar.item>
                 </flux:sidebar.group>
                 @endcan
             </flux:sidebar.nav>

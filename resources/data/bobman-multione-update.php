@@ -140,6 +140,7 @@ return [
         </tr>
     </tbody>
 </table>
+<p class="mt-2 text-xs italic text-stone-500">(*) It's the maximum load that can be lifted just off the ground when the machine is straight and with rear weights. Weight of attachment is included.</p>
 HTML,
             'videos' => ['iFnVe5SQfX4', 'YeU-ikT1Qxo'],
             'preserve_existing_testimonials' => true,
@@ -753,7 +754,7 @@ HTML,
             <td>320 kg (705 lbs)</td>
         </tr>
         <tr>
-            <td><strong>Lifting Capacity (with backweights)</strong></td>
+            <td><strong>Lifting Capacity Straight, Max (*)</strong></td>
             <td>250 kg (551 lbs)</td>
         </tr>
         <tr>
@@ -774,6 +775,7 @@ HTML,
         </tr>
     </tbody>
 </table>
+<p class="mt-2 text-xs italic text-stone-500">(*) It's the maximum load that can be lifted just off the ground when the machine is straight and with rear weights. Weight of attachment is included.</p>
 
 <h3>Data Sheets &amp; Load Charts</h3>
 <ul>
@@ -891,7 +893,7 @@ HTML,
             <td>700 kg (1,543 lbs)</td>
         </tr>
         <tr>
-            <td><strong>Lifting Capacity Straight (with backweights)</strong></td>
+            <td><strong>Lifting Capacity Straight, Max (*)</strong></td>
             <td>560 kg (1,235 lbs)</td>
         </tr>
         <tr>
@@ -912,6 +914,7 @@ HTML,
         </tr>
     </tbody>
 </table>
+<p class="mt-2 text-xs italic text-stone-500">(*) It's the maximum load that can be lifted just off the ground when the machine is straight and with rear weights. Weight of attachment is included.</p>
 
 <h3>Data Sheets &amp; Load Charts</h3>
 <ul>
@@ -1034,7 +1037,7 @@ HTML,
             <td>1,290 kg (2,844 lbs)</td>
         </tr>
         <tr>
-            <td><strong>Lifting Capacity Straight (with backweights)</strong></td>
+            <td><strong>Lifting Capacity Straight, Max (*)</strong></td>
             <td>890 kg (1,962 lbs)</td>
             <td>1,030 kg (2,270 lbs)</td>
         </tr>
@@ -1060,6 +1063,7 @@ HTML,
         </tr>
     </tbody>
 </table>
+<p class="mt-2 text-xs italic text-stone-500">(*) It's the maximum load that can be lifted just off the ground when the machine is straight and with rear weights. Weight of attachment is included.</p>
 
 <h3>Data Sheets &amp; Load Charts</h3>
 <ul>
@@ -1099,24 +1103,24 @@ HTML,
             ],
             'gallery' => [
                 [
-                    'url' => 'https://www.multione.co.uk/wp-content/uploads/2021/12/5.3iD_trequarti_benna-1.png',
-                    'filename' => 'multione-5-series-studio.png',
-                    'alt_text' => 'MultiOne 5.3K iD articulated mini loader studio view',
+                    'url' => 'https://www.multione.com/wp-content/uploads/2024/05/5.3KiD_trequarti_700x700.png',
+                    'filename' => 'multione-5-3k-id-studio.png',
+                    'alt_text' => 'MultiOne 5.3K iD articulated mini loader studio profile',
                 ],
                 [
-                    'url' => 'https://www.multione.co.uk/wp-content/uploads/2021/12/Multione_5.3_bucket-1030x688-1030x688-1.jpg',
-                    'filename' => 'multione-5-series-bucket.jpg',
-                    'alt_text' => 'MultiOne 5 Series working with front bucket',
+                    'url' => 'local:g:/work/hpm/docs/feedbacks/images/WhatsApp Image 2026-11-10 at 7.50.52 AM.jpeg',
+                    'filename' => 'multione-5-2k-id-model.jpg',
+                    'alt_text' => 'MultiOne 5.2K iD articulated compact loader',
+                ],
+                [
+                    'url' => 'local:g:/work/hpm/docs/feedbacks/images/WhatsApp Image 2026-11-10 at 7.50.53 AM.jpeg',
+                    'filename' => 'multione-5-3k-id-model.jpg',
+                    'alt_text' => 'MultiOne 5.3K iD compact telescopic loader',
                 ],
                 [
                     'url' => 'https://www.multione.co.uk/wp-content/uploads/2021/12/Multione_5.3_flail_mower_boom-1030x688-1030x688-1.jpg',
                     'filename' => 'multione-5-series-flail-mower.jpg',
                     'alt_text' => 'MultiOne 5 Series operating boom flail mower',
-                ],
-                [
-                    'url' => 'https://www.multione.co.uk/wp-content/uploads/2021/12/Multione_5.3_top-1030x688-1030x688-1.jpg',
-                    'filename' => 'multione-5-series-top-view.jpg',
-                    'alt_text' => 'MultiOne 5 Series articulated chassis and operator cockpit',
                 ],
             ],
         ],
@@ -1185,7 +1189,7 @@ HTML,
             <td>1,400 kg (3,086 lbs)</td>
         </tr>
         <tr>
-            <td><strong>Lifting Capacity Straight (with backweights)</strong></td>
+            <td><strong>Lifting Capacity Straight, Max (*)</strong></td>
             <td>1,120 kg (2,469 lbs)</td>
         </tr>
         <tr>
@@ -1206,6 +1210,7 @@ HTML,
         </tr>
     </tbody>
 </table>
+<p class="mt-2 text-xs italic text-stone-500">(*) It's the maximum load that can be lifted just off the ground when the machine is straight and with rear weights. Weight of attachment is included.</p>
 
 <h3>Data Sheets &amp; Load Charts</h3>
 <ul>
@@ -1233,9 +1238,9 @@ HTML,
             ],
             'gallery' => [
                 [
-                    'url' => 'https://www.multione.co.uk/wp-content/uploads/2022/01/6.jpeg',
-                    'filename' => 'multione-6-series-profile.jpg',
-                    'alt_text' => 'MultiOne 6 Series 6.3 iDS compact telescopic loader',
+                    'url' => 'https://www.multione.com/wp-content/uploads/2024/05/6.3iDS_trequarti_post_dx-e1724314229192.png',
+                    'filename' => 'multione-6-3-ids-profile.png',
+                    'alt_text' => 'MultiOne 6 Series 6.3 iDS heavy-duty compact loader',
                 ],
                 [
                     'url' => 'https://www.multione.co.uk/wp-content/uploads/2022/01/MultiOne-mini-loader-6k-series-bucket_01-1030x687-1.jpeg',
@@ -1243,14 +1248,14 @@ HTML,
                     'alt_text' => 'MultiOne 6 Series working with front loader bucket',
                 ],
                 [
+                    'url' => 'https://www.multione.com/wp-content/uploads/2024/05/6.3iDS_fronte-1-e1724314262767.png',
+                    'filename' => 'multione-6-3-ids-front.png',
+                    'alt_text' => 'MultiOne 6.3 iDS front view and Double-H telescopic boom',
+                ],
+                [
                     'url' => 'https://www.multione.co.uk/wp-content/uploads/2022/01/MultiOne-mini-loader-6-series-with-rotary-broom-1030x688-1.jpg',
                     'filename' => 'multione-6-series-rotary-broom.jpg',
                     'alt_text' => 'MultiOne 6 Series sweeping yard with rotary broom attachment',
-                ],
-                [
-                    'url' => 'https://www.multione.co.uk/wp-content/uploads/2022/01/MultiOne-mini-loader-6-series-with-flail-mower-whit-side-shift1-1030x688-1.jpg',
-                    'filename' => 'multione-6-series-flail-mower.jpg',
-                    'alt_text' => 'MultiOne 6 Series operating side-shift flail mower',
                 ],
             ],
         ],
@@ -1319,7 +1324,7 @@ HTML,
             <td>1,725 kg (3,803 lbs)</td>
         </tr>
         <tr>
-            <td><strong>Lifting Capacity Straight (with backweights)</strong></td>
+            <td><strong>Lifting Capacity Straight, Max (*)</strong></td>
             <td>1,380 kg (3,042 lbs)</td>
         </tr>
         <tr>
@@ -1340,6 +1345,7 @@ HTML,
         </tr>
     </tbody>
 </table>
+<p class="mt-2 text-xs italic text-stone-500">(*) It's the maximum load that can be lifted just off the ground when the machine is straight and with rear weights. Weight of attachment is included.</p>
 
 <h3>Data Sheets &amp; Load Charts</h3>
 <ul>
@@ -1367,24 +1373,24 @@ HTML,
             ],
             'gallery' => [
                 [
-                    'url' => 'https://www.multione.co.uk/wp-content/uploads/2022/01/7.jpeg',
-                    'filename' => 'multione-7-series-profile.jpg',
+                    'url' => 'https://www.multione.com/wp-content/uploads/2024/05/7.2_k_vista_lato_sx-e1724328437947.png',
+                    'filename' => 'multione-7-2k-profile.png',
                     'alt_text' => 'MultiOne 7 Series 7.2K heavy-lifting compact loader',
                 ],
                 [
-                    'url' => 'https://www.multione.co.uk/wp-content/uploads/2022/09/multione-agriculture-small-holders-application.jpg',
-                    'filename' => 'multione-7-series-agriculture.jpg',
-                    'alt_text' => 'MultiOne 7 Series handling bales on farm',
+                    'url' => 'https://www.multione.com/wp-content/uploads/2024/05/MultiOne-mini-loader-7.2k-with-bucket-1030x773-1.jpg',
+                    'filename' => 'multione-7-2k-bucket.jpg',
+                    'alt_text' => 'MultiOne 7.2K working in yard with front bucket',
                 ],
                 [
-                    'url' => 'https://www.multione.co.uk/wp-content/uploads/2022/01/MultiOne-mini-loader-7-series-with-multipurpose-bucket1-1030x688-1.jpg',
-                    'filename' => 'multione-7-series-bucket.jpg',
-                    'alt_text' => 'MultiOne 7 Series with multipurpose bucket',
+                    'url' => 'https://www.multione.com/wp-content/uploads/2024/05/MultiOne-mini-loader-7.2k-with-grapple-bucket_01.jpg',
+                    'filename' => 'multione-7-2k-grapple.jpg',
+                    'alt_text' => 'MultiOne 7.2K operating heavy-duty grapple bucket',
                 ],
                 [
-                    'url' => 'https://www.multione.co.uk/wp-content/uploads/2022/01/MultiOne-mini-loader-7-series-with-sweeper1-1030x688-1.jpg',
-                    'filename' => 'multione-7-series-sweeper.jpg',
-                    'alt_text' => 'MultiOne 7 Series operating rotary collector sweeper',
+                    'url' => 'https://www.multione.com/wp-content/uploads/2024/05/MultiOne-mini-loader-7.2k-with-pallet-fork_01-1030x610-1.jpg',
+                    'filename' => 'multione-7-2k-pallet-fork.jpg',
+                    'alt_text' => 'MultiOne 7.2K moving builder and farm supplies with pallet fork',
                 ],
             ],
         ],
@@ -1462,7 +1468,7 @@ HTML,
             <td>2,050 kg (4,520 lbs)</td>
         </tr>
         <tr>
-            <td><strong>Lifting Capacity Straight (with backweights)</strong></td>
+            <td><strong>Lifting Capacity Straight, Max (*)</strong></td>
             <td>1,470 kg (3,240 lbs)</td>
             <td>1,640 kg (3,615 lbs)</td>
         </tr>
@@ -1488,6 +1494,7 @@ HTML,
         </tr>
     </tbody>
 </table>
+<p class="mt-2 text-xs italic text-stone-500">(*) It's the maximum load that can be lifted just off the ground when the machine is straight and with rear weights. Weight of attachment is included.</p>
 
 <h3>Data Sheets &amp; Load Charts</h3>
 <ul>
@@ -1529,22 +1536,17 @@ HTML,
                 [
                     'url' => 'https://www.multione.co.uk/wp-content/uploads/2022/01/8.jpeg',
                     'filename' => 'multione-8-series-profile.jpg',
-                    'alt_text' => 'MultiOne 8 Series high-performance articulated loader',
-                ],
-                [
-                    'url' => 'https://www.multione.co.uk/wp-content/uploads/2022/01/multione-8-series-mini-loader.jpg',
-                    'filename' => 'multione-8-series-overview.jpg',
-                    'alt_text' => 'MultiOne 8 Series working with heavy load',
+                    'alt_text' => 'MultiOne 8 Series articulated compact loader studio view',
                 ],
                 [
                     'url' => 'https://www.multione.co.uk/wp-content/uploads/2022/01/MultiOne-mini-loader-8-series-with-pallet-fork1-1030x688-1.jpg',
                     'filename' => 'multione-8-series-pallet-fork.jpg',
-                    'alt_text' => 'MultiOne 8 Series lifting with pallet forks',
+                    'alt_text' => 'MultiOne 8 Series moving heavy tote bags with pallet fork attachment',
                 ],
                 [
                     'url' => 'https://www.multione.co.uk/wp-content/uploads/2022/01/MultiOne-mini-loader-8-series-with-flail-mower-with-side-shift1-1030x688-1.jpg',
                     'filename' => 'multione-8-series-flail-mower.jpg',
-                    'alt_text' => 'MultiOne 8 Series operating side-shift flail mower',
+                    'alt_text' => 'MultiOne 8 Series operating heavy duty flail mower',
                 ],
             ],
         ],
@@ -1622,7 +1624,7 @@ HTML,
             <td>3,280 kg</td>
         </tr>
         <tr>
-            <td><strong>Lifting Capacity Straight (with backweights)</strong></td>
+            <td><strong>Lifting Capacity Straight, Max (*)</strong></td>
             <td>2,540 kg</td>
             <td>2,620 kg</td>
         </tr>
@@ -1648,6 +1650,7 @@ HTML,
         </tr>
     </tbody>
 </table>
+<p class="mt-2 text-xs italic text-stone-500">(*) It's the maximum load that can be lifted just off the ground when the machine is straight and with rear weights. Weight of attachment is included.</p>
 
 <h3>Data Sheets &amp; Load Charts</h3>
 <ul>
@@ -1681,24 +1684,24 @@ HTML,
             ],
             'gallery' => [
                 [
-                    'url' => 'https://www.multione.co.uk/wp-content/uploads/2022/01/11.jpeg',
-                    'filename' => 'multione-11-series-profile.jpg',
-                    'alt_text' => 'MultiOne 11 Series flagship heavy-duty compact loader',
+                    'url' => 'https://www.multione.com/wp-content/uploads/2026/01/11.6KTurboS_trequarti.png',
+                    'filename' => 'multione-11-series-profile.png',
+                    'alt_text' => 'MultiOne 11 Series 11.6K TurboS flagship compact loader',
                 ],
                 [
-                    'url' => 'https://www.multione.co.uk/wp-content/uploads/2022/12/11.6K_trequarti_dx_benna-copia-1030x688-1.jpg',
-                    'filename' => 'multione-11-6k-bucket.jpg',
-                    'alt_text' => 'MultiOne 11.6K TurboS with front bucket',
+                    'url' => 'https://www.multione.com/wp-content/uploads/2026/01/11.6K_Turbos_02-1.jpg',
+                    'filename' => 'multione-11-6k-turbos-loading.jpg',
+                    'alt_text' => 'MultiOne 11.6K TurboS earthmoving and heavy loading on site',
                 ],
                 [
-                    'url' => 'https://www.multione.co.uk/wp-content/uploads/2022/10/HD-Flail-Mower-right-side-view-1030x687-1.jpg',
-                    'filename' => 'multione-11-series-hd-flail-mower.jpg',
-                    'alt_text' => 'MultiOne 11 Series operating heavy-duty flail mower',
+                    'url' => 'https://www.multione.com/wp-content/uploads/2026/01/11.6K_Turbos_03-1.jpg',
+                    'filename' => 'multione-11-6k-turbos-yard.jpg',
+                    'alt_text' => 'MultiOne 11.6K TurboS operating high-capacity bucket in yard',
                 ],
                 [
-                    'url' => 'https://www.multione.co.uk/wp-content/uploads/2022/01/11.6_quote_500x800-copia.jpg',
-                    'filename' => 'multione-11-series-dimensions.jpg',
-                    'alt_text' => 'MultiOne 11 Series dimensions diagram',
+                    'url' => 'https://www.multione.com/wp-content/uploads/2026/01/11.9k-TurboS_backhoe.jpeg',
+                    'filename' => 'multione-11-9k-backhoe.jpg',
+                    'alt_text' => 'MultiOne 11.9K TurboS operating backhoe excavator attachment',
                 ],
             ],
         ],
@@ -1770,7 +1773,7 @@ HTML,
             <td>1,780 kg</td>
         </tr>
         <tr>
-            <td><strong>Lifting Capacity Straight (with backweights)</strong></td>
+            <td><strong>Lifting Capacity Straight, Max (*)</strong></td>
             <td>890 kg (1,962 lbs)</td>
             <td>1,420 kg</td>
         </tr>
@@ -1796,6 +1799,7 @@ HTML,
         </tr>
     </tbody>
 </table>
+<p class="mt-2 text-xs italic text-stone-500">(*) It's the maximum load that can be lifted just off the ground when the machine is straight and with rear weights. Weight of attachment is included.</p>
 
 <h3>Data Sheets &amp; Load Charts</h3>
 <ul>

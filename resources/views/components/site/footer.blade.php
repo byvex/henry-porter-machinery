@@ -2,9 +2,9 @@
     <x-site.container>
       <div class="footer-grid mb-14 grid gap-9 lg:gap-14">
         <div>
-          <div class="site-logo inline-flex items-center font-display text-lg font-extrabold tracking-tight">
-            Henry<span>Porter</span>
-          </div>
+          <a href="{{ route('home') }}" class="mb-4 inline-block rounded-xl bg-white p-2.5 shadow-sm transition hover:opacity-95" aria-label="Henry Porter Machinery">
+            <img src="{{ asset('images/logo.jpeg') }}" alt="Henry Porter Machinery" width="460" height="108" class="h-8 w-auto object-contain">
+          </a>
           <p>
             Premium agricultural machinery dealer based in Lisburn,
             Northern Ireland. Serving farmers and contractors across the province.
@@ -31,9 +31,11 @@
         </div>
         <div>
           <h4>Contact</h4>
-          <ul>
-            <li><a class="inline-flex items-start gap-2" href="tel:+442892622611"><x-icon.call class="mt-0.5 size-4 text-brand-light" />(028) 9262 2611</a></li>
-            <li><a class="inline-flex min-w-0 items-start gap-2" href="mailto:info@henryportermachinery.co.uk"><x-icon.mail class="mt-0.5 size-4 text-brand-light" /><span class="min-w-0 break-words">info@henryportermachinery.co.uk</span></a></li>
+          <ul class="space-y-2">
+            <li><a class="inline-flex items-start gap-2 transition hover:text-white" href="tel:+442892622611"><x-icon.call class="mt-0.5 size-4 text-brand-light" />Office: (028) 9262 2611</a></li>
+            <li><a class="inline-flex items-start gap-2 transition hover:text-white" href="tel:+447821065578"><x-icon.call class="mt-0.5 size-4 text-brand-light" />James: 07821 065578</a></li>
+            <li><a class="inline-flex items-start gap-2 transition hover:text-white" href="tel:+447703011785"><x-icon.call class="mt-0.5 size-4 text-brand-light" />Henry: 07703 011785</a></li>
+            <li><a class="inline-flex min-w-0 items-start gap-2 transition hover:text-white" href="mailto:info@henryportermachinery.co.uk"><x-icon.mail class="mt-0.5 size-4 text-brand-light" /><span class="min-w-0 break-words">info@henryportermachinery.co.uk</span></a></li>
             <li class="flex items-start gap-2"><x-icon.location-on class="mt-0.5 size-4 text-brand-light" />75 Cockhill Road, Lisburn, BT27 5RS</li>
           </ul>
         </div>

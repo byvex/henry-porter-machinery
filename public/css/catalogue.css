@@ -26,6 +26,7 @@
 .gallery-dialog button { cursor: pointer; padding: .5rem; }
 .video-placeholder { min-height: 220px; }
 .video-placeholder iframe { width: 100%; aspect-ratio: 16/9; border: 0; border-radius: .8rem; }
+.video-placeholder video { width: 100%; aspect-ratio: 16/9; max-height: 480px; object-fit: contain; background: #000; border-radius: .8rem; }
 .enquiry-trap { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(100%); }
 .public-site input[type=checkbox] { accent-color: #c8102e; }
 .public-site a:focus-visible, .public-site button:focus-visible { outline: 2px solid #c8102e; outline-offset: 4px; }

@@ -93,13 +93,37 @@
                         <span class="flex size-7 items-center justify-center rounded-lg bg-brand/10 text-brand">
                             <x-icon.call class="size-3.5" />
                         </span>
-                        <span class="font-medium">(028) 9262 2611</span>
+                        <div>
+                            <span class="block text-[10px] text-muted">Office</span>
+                            <span class="font-medium">(028) 9262 2611</span>
+                        </div>
+                    </a>
+                    <a href="tel:+447821065578" class="flex items-center gap-3 text-charcoal transition hover:text-brand">
+                        <span class="flex size-7 items-center justify-center rounded-lg bg-brand/10 text-brand">
+                            <x-icon.call class="size-3.5" />
+                        </span>
+                        <div>
+                            <span class="block text-[10px] text-muted">James</span>
+                            <span class="font-medium">07821 065578</span>
+                        </div>
+                    </a>
+                    <a href="tel:+447703011785" class="flex items-center gap-3 text-charcoal transition hover:text-brand">
+                        <span class="flex size-7 items-center justify-center rounded-lg bg-brand/10 text-brand">
+                            <x-icon.call class="size-3.5" />
+                        </span>
+                        <div>
+                            <span class="block text-[10px] text-muted">Henry</span>
+                            <span class="font-medium">07703 011785</span>
+                        </div>
                     </a>
                     <a href="mailto:info@henryportermachinery.co.uk" class="flex items-center gap-3 text-charcoal transition hover:text-brand">
                         <span class="flex size-7 items-center justify-center rounded-lg bg-brand/10 text-brand">
                             <x-icon.mail class="size-3.5" />
                         </span>
-                        <span class="truncate font-medium">info@henryportermachinery.co.uk</span>
+                        <div class="min-w-0">
+                            <span class="block text-[10px] text-muted">Email</span>
+                            <span class="truncate font-medium block">info@henryportermachinery.co.uk</span>
+                        </div>
                     </a>
                 </div>
             </div>

@@ -103,4 +103,18 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!/^[a-zA-Z0-9_-]{11}$/.test(id)) return;
   const frame = document.createElement('iframe'); frame.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1'; frame.title = 'Machinery demonstration on YouTube'; frame.allow = 'autoplay; encrypted-media; picture-in-picture'; frame.allowFullscreen = true; wrapper.replaceChildren(frame);
  }));
+ document.querySelectorAll('[data-local-video-play]').forEach(button => button.addEventListener('click', () => {
+  const wrapper = button.closest('[data-local-video]');
+  if (!wrapper) return;
+  const src = wrapper.dataset.localVideo;
+  if (!src) return;
+  const video = document.createElement('video');
+  video.src = src;
+  video.controls = true;
+  video.autoplay = true;
+  video.playsInline = true;
+  video.className = 'w-full h-full rounded-card object-contain bg-black';
+  wrapper.classList.remove('p-8', 'flex', 'flex-col', 'justify-between');
+  wrapper.replaceChildren(video);
+ }));
 });

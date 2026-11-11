@@ -65,7 +65,7 @@
  .newsletter-inner::before { content: ''; position: absolute; top: -80px; right: -80px; width: 300px; height: 300px; border-radius: 50%; background: rgb(255 255 255 / .06); }
  .newsletter-inner h2 { margin-bottom: 12px; font-size: clamp(26px,3.5vw,36px); font-weight: 800; line-height: 1.15; } .newsletter-inner p { font-size: 15px; line-height: 1.7; }
  .newsletter-form input { width: 100%; min-width: 0; flex: 1; padding: 14px 16px; color: white; font-size: 14px; } .newsletter-form input::placeholder { color: rgb(255 255 255 / .7); }
- .newsletter-form button { padding: 14px 24px; border-radius: 999px; background: white; color: var(--color-brand); font: 700 14px var(--font-display); white-space: nowrap; opacity: .75; cursor: not-allowed; }
+ .newsletter-form button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 24px; border-radius: 999px; background: white; color: var(--color-brand); font: 700 14px var(--font-display); white-space: nowrap; opacity: .75; cursor: not-allowed; }
  .dark-banner::before { content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%); width: 800px; height: 800px; background: radial-gradient(circle,rgb(200 16 46 / .14),transparent 65%); }
  .dark-banner::after { content: ''; position: absolute; inset: 0 0 auto; height: 4px; background: linear-gradient(90deg,transparent,var(--color-brand),transparent); }
  .dark-banner h2 { position: relative; margin-bottom: 20px; font-size: clamp(34px,5vw,54px); font-weight: 800; line-height: 1.08; color: white; } .dark-banner p { position: relative; max-width: 500px; margin: 0 auto 40px; color: rgb(234 232 228 / .6); line-height: 1.75; }
@@ -88,7 +88,7 @@
 @media (prefers-reduced-motion: reduce) { .public-site *, .public-site *::before, .public-site *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } .hero-slide { opacity: 0 !important; visibility: hidden !important; } .hero-slide:first-child { opacity: 1 !important; visibility: visible !important; } }
 /* Material icon arrows: small directional nudge on hover/focus (disabled for reduced motion). */
 .icon-nudge { transition: transform .2s ease; }
-a:hover > .icon-nudge, a:focus-visible > .icon-nudge { transform: translateX(3px); }
+a:hover > .icon-nudge, a:focus-visible > .icon-nudge, button:not(:disabled):hover > .icon-nudge, button:not(:disabled):focus-visible > .icon-nudge { transform: translateX(3px); }
 a:hover > .icon-nudge--down, a:focus-visible > .icon-nudge--down { transform: translateY(3px); }
 a:hover > .icon-nudge--outward, a:focus-visible > .icon-nudge--outward { transform: translate(2px, -2px); }
 @media (prefers-reduced-motion: reduce) { .icon-nudge { transition: none; transform: none !important; } }

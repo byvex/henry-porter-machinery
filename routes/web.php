@@ -3,6 +3,7 @@
 use App\Http\Controllers\CatalogueController;
 use App\Http\Controllers\EnquiryController;
 use App\Livewire\Admin\CatalogueEditor;
+use App\Livewire\Admin\CatalogueImportExport;
 use App\Livewire\Admin\CatalogueIndex;
 use App\Livewire\Admin\EnquiryInbox;
 use App\Models\Brand;
@@ -52,6 +53,7 @@ Route::middleware(['auth', 'verified', 'can:manage-catalogue'])->prefix('admin')
     })->name('dashboard');
     Route::get('/enquiries', EnquiryInbox::class)->name('enquiries.index');
     Route::get('/enquiries/{id}', EnquiryInbox::class)->whereUuid('id')->name('enquiries.show');
+    Route::get('/import-export', CatalogueImportExport::class)->name('import-export');
     Route::get('/{resource}', CatalogueIndex::class)->whereIn('resource', ['products', 'categories', 'brands'])->name('catalogue.index');
     Route::get('/{resource}/create', CatalogueEditor::class)->whereIn('resource', ['products', 'categories', 'brands'])->name('catalogue.create');
     Route::get('/{resource}/{id}/edit', CatalogueEditor::class)->whereIn('resource', ['products', 'categories', 'brands'])->whereUuid('id')->name('catalogue.edit');
