@@ -4,6 +4,7 @@
         @include('partials.head')
         @if(request()->routeIs('admin.*'))
             <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v={{ filemtime(public_path('css/admin.css')) }}">
+            <script src="{{ asset('js/admin-media.js') }}?v={{ filemtime(public_path('js/admin-media.js')) }}" defer></script>
         @endif
     </head>
     <body class="min-h-screen bg-white dark:bg-zinc-800">
@@ -30,6 +31,7 @@
                     @foreach(['products' => 'Products', 'categories' => 'Categories', 'brands' => 'Brands'] as $resource => $label)
                         <flux:sidebar.item icon="folder" :href="route('admin.catalogue.index', $resource)" :current="request()->route('resource') === $resource" wire:navigate>{{ $label }}</flux:sidebar.item>
                     @endforeach
+                    <flux:sidebar.item icon="photo" :href="route('admin.media')" :current="request()->routeIs('admin.media')" wire:navigate>Media Library</flux:sidebar.item>
                     <flux:sidebar.item icon="arrow-path-rounded-square" :href="route('admin.import-export')" :current="request()->routeIs('admin.import-export')" wire:navigate>Import / Export</flux:sidebar.item>
                 </flux:sidebar.group>
                 @endcan

@@ -53,6 +53,15 @@ Route::middleware(['auth', 'verified', 'can:manage-catalogue'])->prefix('admin')
     })->name('dashboard');
     Route::get('/enquiries', EnquiryInbox::class)->name('enquiries.index');
     Route::get('/enquiries/{id}', EnquiryInbox::class)->whereUuid('id')->name('enquiries.show');
+    Route::get('/media', [\App\Http\Controllers\Admin\AdminMediaController::class, 'index'])->name('media');
+    Route::get('/media/items', [\App\Http\Controllers\Admin\AdminMediaController::class, 'items'])->name('media.items');
+    Route::post('/media/upload', [\App\Http\Controllers\Admin\AdminMediaController::class, 'upload'])->name('media.upload');
+    Route::post('/media/bulk-detach', [\App\Http\Controllers\Admin\AdminMediaController::class, 'bulkDetach'])->name('media.bulk-detach');
+    Route::post('/media/bulk-delete', [\App\Http\Controllers\Admin\AdminMediaController::class, 'bulkDelete'])->name('media.bulk-delete');
+    Route::post('/media/prune', [\App\Http\Controllers\Admin\AdminMediaController::class, 'prune'])->name('media.prune');
+    Route::post('/media/{id}', [\App\Http\Controllers\Admin\AdminMediaController::class, 'update'])->whereUuid('id')->name('media.update');
+    Route::post('/media/{id}/detach', [\App\Http\Controllers\Admin\AdminMediaController::class, 'detach'])->whereUuid('id')->name('media.detach');
+    Route::delete('/media/{id}', [\App\Http\Controllers\Admin\AdminMediaController::class, 'deleteSingle'])->whereUuid('id')->name('media.delete');
     Route::get('/import-export', CatalogueImportExport::class)->name('import-export');
     Route::get('/{resource}', CatalogueIndex::class)->whereIn('resource', ['products', 'categories', 'brands'])->name('catalogue.index');
     Route::get('/{resource}/create', CatalogueEditor::class)->whereIn('resource', ['products', 'categories', 'brands'])->name('catalogue.create');

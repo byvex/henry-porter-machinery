@@ -6,6 +6,7 @@ use App\Livewire\Admin\CatalogueEditor;
 use App\Livewire\Admin\CatalogueIndex;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\MediaAsset;
 use App\Models\Passkey;
 use App\Models\Product;
 use App\Models\User;
@@ -249,5 +250,169 @@ class CatalogueAdminTest extends TestCase
         $component->call('save')->assertHasNoErrors();
         $saved = $product->fresh()->description_html;
         $this->assertSame($legacyHtml, $saved);
+    }
+
+    public function test_removing_gallery_image_deletes_unreferenced_file_and_media_asset(): void
+    {
+        $this->admin();
+        Storage::fake('public');
+        $service = app(CatalogueAdmin::class);
+
+        $product = $service->save('products', null, $this->form(), [], [], [], [
+            'images' => [UploadedFile::fake()->image('image-1.jpg'), UploadedFile::fake()->image('image-2.jpg')],
+        ]);
+
+        $this->assertCount(2, $product->media);
+        $this->assertCount(2, Storage::disk('public')->allFiles());
+
+        $firstAsset = $product->media()->orderByPivot('sort_order')->first();
+        $this->assertNotNull($firstAsset);
+        Storage::disk('public')->assertExists($firstAsset->storage_path);
+
+        // Edit product and remove the first image from gallery
+        $component = Livewire::test(CatalogueEditor::class, ['resource' => 'products', 'id' => $product->id]);
+        $component->call('removeImageAt', 0)->call('save')->assertHasNoErrors();
+
+        // The removed asset should have its physical file deleted and record removed
+        $this->assertCount(1, $product->fresh()->media);
+        $this->assertCount(1, Storage::disk('public')->allFiles());
+        Storage::disk('public')->assertMissing($firstAsset->storage_path);
+        $this->assertDatabaseMissing('media_assets', ['id' => $firstAsset->id]);
+    }
+
+    public function test_shared_or_html_referenced_or_legacy_media_is_not_deleted_when_detached(): void
+    {
+        $this->admin();
+        Storage::fake('public');
+        $service = app(CatalogueAdmin::class);
+
+        // 1. Shared with another product
+        $product1 = $service->save('products', null, $this->form(['name' => 'Machine 1']), [], [], [], [
+            'images' => [UploadedFile::fake()->image('shared.jpg')],
+        ]);
+        $sharedAsset = $product1->media->first();
+        $product2 = $service->save('products', null, $this->form(['name' => 'Machine 2']), [], [], [], []);
+        $product2->media()->attach($sharedAsset->id, ['id' => (string) Str::uuid7(), 'sort_order' => 0]);
+
+        // Remove from product 1
+        $component1 = Livewire::test(CatalogueEditor::class, ['resource' => 'products', 'id' => $product1->id]);
+        $component1->call('removeImageAt', 0)->call('save')->assertHasNoErrors();
+
+        // Shared asset is still used by product 2, so file and record must remain
+        $this->assertDatabaseHas('media_assets', ['id' => $sharedAsset->id]);
+        Storage::disk('public')->assertExists($sharedAsset->storage_path);
+
+        // 2. Referenced in description HTML
+        $product3 = $service->save('products', null, $this->form(['name' => 'Machine 3']), [], [], [], [
+            'images' => [UploadedFile::fake()->image('embedded.jpg')],
+        ]);
+        $embeddedAsset = $product3->media->first();
+        // Embed asset path in description
+        $product3->update(['description_html' => '<p><img src="/storage/'.$embeddedAsset->storage_path.'"></p>']);
+
+        $component3 = Livewire::test(CatalogueEditor::class, ['resource' => 'products', 'id' => $product3->id]);
+        $component3->call('removeImageAt', 0)->call('save')->assertHasNoErrors();
+
+        // Asset is still referenced in HTML, so file and record must remain
+        $this->assertDatabaseHas('media_assets', ['id' => $embeddedAsset->id]);
+        Storage::disk('public')->assertExists($embeddedAsset->storage_path);
+
+        // 3. Protected legacy Joomla asset
+        $legacyPath = 'catalogue/joomla/'.str_repeat('a', 64).'.jpg';
+        Storage::disk('public')->put($legacyPath, 'fake-legacy-image-content');
+        $legacyAsset = MediaAsset::create([
+            'storage_path' => $legacyPath,
+            'mime_type' => 'image/jpeg',
+            'checksum' => hash('sha256', 'fake-legacy-image-content'),
+        ]);
+        $product4 = $service->save('products', null, $this->form(['name' => 'Machine 4']), [], [], [], []);
+        $product4->media()->attach($legacyAsset->id, ['id' => (string) Str::uuid7(), 'sort_order' => 0]);
+
+        $component4 = Livewire::test(CatalogueEditor::class, ['resource' => 'products', 'id' => $product4->id]);
+        $component4->call('removeImageAt', 0)->call('save')->assertHasNoErrors();
+
+        // Legacy asset must be untouched in storage
+        Storage::disk('public')->assertExists($legacyPath);
+        $this->assertDatabaseHas('media_assets', ['id' => $legacyAsset->id]);
+    }
+
+    public function test_removing_or_replacing_brand_and_category_images_deletes_unreferenced_files(): void
+    {
+        $this->admin();
+        Storage::fake('public');
+        $service = app(CatalogueAdmin::class);
+
+        // Brand logo & image
+        $brand = $service->save('brands', null, ['name' => 'Brand A', 'slug' => '', 'sort_order' => 0, 'is_active' => true], [], [], [], [
+            'logo' => UploadedFile::fake()->image('logo.png'),
+            'image' => UploadedFile::fake()->image('photo.jpg'),
+        ]);
+        $oldLogo = $brand->logo;
+        $oldImage = $brand->image;
+        Storage::disk('public')->assertExists($oldLogo->storage_path);
+        Storage::disk('public')->assertExists($oldImage->storage_path);
+
+        // Replace logo with new one and remove image
+        $service->save('brands', $brand->id, ['name' => 'Brand A', 'slug' => 'brand-a', 'sort_order' => 0, 'is_active' => true], [], [], [], [
+            'logo' => UploadedFile::fake()->image('new-logo.png'),
+            'remove_image' => true,
+        ]);
+
+        Storage::disk('public')->assertMissing($oldLogo->storage_path);
+        Storage::disk('public')->assertMissing($oldImage->storage_path);
+        $this->assertDatabaseMissing('media_assets', ['id' => $oldLogo->id]);
+        $this->assertDatabaseMissing('media_assets', ['id' => $oldImage->id]);
+
+        // Category image
+        $category = $service->save('categories', null, ['name' => 'Cat A', 'slug' => '', 'description' => '', 'sort_order' => 0, 'is_active' => true], [], [], [], [
+            'image' => UploadedFile::fake()->image('cat.png'),
+        ]);
+        $catImage = $category->image;
+        Storage::disk('public')->assertExists($catImage->storage_path);
+
+        // Remove category image
+        $service->save('categories', $category->id, ['name' => 'Cat A', 'slug' => 'cat-a', 'description' => '', 'sort_order' => 0, 'is_active' => true], [], [], [], [
+            'remove_image' => true,
+        ]);
+
+        Storage::disk('public')->assertMissing($catImage->storage_path);
+        $this->assertDatabaseMissing('media_assets', ['id' => $catImage->id]);
+    }
+
+    public function test_prune_orphaned_media_command(): void
+    {
+        $this->admin();
+        Storage::fake('public');
+
+        // Create an orphaned MediaAsset
+        $orphanedPath = 'products/2026/11-11/test/orphan-photo.jpg';
+        Storage::disk('public')->put($orphanedPath, 'orphan-content');
+        $orphanedAsset = MediaAsset::create([
+            'storage_path' => $orphanedPath,
+            'mime_type' => 'image/jpeg',
+            'checksum' => hash('sha256', 'orphan-content'),
+        ]);
+
+        // Create an untracked file directly in storage
+        $untrackedPath = 'products/2026/11-11/test/untracked-file.jpg';
+        Storage::disk('public')->put($untrackedPath, 'untracked-content');
+
+        // Run dry-run
+        $this->artisan('catalogue:prune-orphaned-media')
+            ->expectsOutputToContain('Dry run complete')
+            ->assertSuccessful();
+
+        Storage::disk('public')->assertExists($orphanedPath);
+        Storage::disk('public')->assertExists($untrackedPath);
+        $this->assertDatabaseHas('media_assets', ['id' => $orphanedAsset->id]);
+
+        // Run with --apply
+        $this->artisan('catalogue:prune-orphaned-media', ['--apply' => true])
+            ->expectsOutputToContain('Purge complete')
+            ->assertSuccessful();
+
+        Storage::disk('public')->assertMissing($orphanedPath);
+        Storage::disk('public')->assertMissing($untrackedPath);
+        $this->assertDatabaseMissing('media_assets', ['id' => $orphanedAsset->id]);
     }
 }

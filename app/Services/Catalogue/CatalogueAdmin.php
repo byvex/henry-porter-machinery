@@ -140,8 +140,9 @@ class CatalogueAdmin
             throw ValidationException::withMessages(['images' => 'Upload at most 20 images at a time.']);
         }
         $written = [];
+        $toDelete = [];
         try {
-            DB::transaction(function () use ($resource, $record, $data, $gallery, $videos, $testimonials, $uploads, &$written): void {
+            DB::transaction(function () use ($resource, $record, $data, $gallery, $videos, $testimonials, $uploads, &$written, &$toDelete): void {
                 $fields = $data;
                 unset($fields['category_ids'], $fields['image_alt_text'], $fields['logo_alt_text']);
                 foreach (['summary', 'description_html', 'description'] as $field) {
@@ -162,21 +163,27 @@ class CatalogueAdmin
                 }
                 if ($record instanceof Product) {
                     $record->categories()->sync(array_fill_keys($data['category_ids'] ?? [], ['source_imported' => false, 'sort_order' => 0]));
-                    $allowed = $record->media()->pluck('media_assets.id')->all();
+                    $previouslyAttachedIds = $record->media()->pluck('media_assets.id')->all();
                     $links = [];
+                    $retainedIds = [];
                     foreach ($gallery as $index => $image) {
-                        if (! in_array($image['id'], $allowed, true)) {
-                            throw ValidationException::withMessages(['gallery' => 'This image is not attached to this product.']);
+                        $asset = MediaAsset::whereKey($image['id'])->first();
+                        if (! $asset) {
+                            throw ValidationException::withMessages(['gallery' => 'Selected media asset does not exist.']);
                         }
-                        $asset = MediaAsset::whereKey($image['id'])->firstOrFail();
                         $asset->update(['alt_text' => $image['alt_text'] ?? '', 'admin_modified_at' => now()]);
                         $links[$asset->id] = ['sort_order' => $index];
+                        $retainedIds[] = $asset->id;
                     }
                     foreach ($uploads['images'] ?? [] as $file) {
                         $asset = $this->upload($file, $folder, $written);
                         $links[$asset->id] = ['sort_order' => count($links)];
                     }
                     $record->media()->sync($links);
+                    $detachedIds = array_diff($previouslyAttachedIds, $retainedIds);
+                    foreach ($detachedIds as $detachedId) {
+                        $this->purgeAssetIfOrphaned($detachedId, $toDelete);
+                    }
                     foreach (['videos' => $videos, 'testimonials' => $testimonials] as $relation => $rows) {
                         $retained = [];
                         foreach ($rows as $index => $row) {
@@ -189,22 +196,42 @@ class CatalogueAdmin
                         $record->$relation()->whereNotIn('id', $retained)->delete();
                     }
                 } else {
+                    $detachedIds = [];
                     foreach (['image' => 'image_media_id', 'logo' => 'logo_media_id'] as $key => $column) {
                         if ($resource !== 'brands' && $key === 'logo') {
                             continue;
                         }
+                        $oldAssetId = $record->getAttribute($column);
+                        $replacedOrRemoved = false;
                         if ($uploads[$key] ?? null) {
                             $record->setAttribute($column, $this->upload($uploads[$key], $folder, $written)->id);
+                            $replacedOrRemoved = true;
+                        } elseif (! empty($uploads['selected_'.$key])) {
+                            $selectedAsset = MediaAsset::whereKey($uploads['selected_'.$key])->first();
+                            if ($selectedAsset) {
+                                $record->setAttribute($column, $selectedAsset->id);
+                                $replacedOrRemoved = true;
+                            }
                         } elseif ($uploads['remove_'.$key] ?? false) {
                             $record->setAttribute($column, null);
+                            $replacedOrRemoved = true;
                         }
                         if ($record->getAttribute($column) && array_key_exists($key.'_alt_text', $data)) {
                             MediaAsset::whereKey($record->getAttribute($column))->update(['alt_text' => $data[$key.'_alt_text'], 'admin_modified_at' => now()]);
                         }
+                        if ($replacedOrRemoved && $oldAssetId && $oldAssetId !== $record->getAttribute($column)) {
+                            $detachedIds[] = $oldAssetId;
+                        }
                     }
                     $record->save();
+                    foreach ($detachedIds as $detachedId) {
+                        $this->purgeAssetIfOrphaned($detachedId, $toDelete);
+                    }
                 }
             });
+            foreach ($toDelete as $path) {
+                Storage::disk('public')->delete($path);
+            }
         } catch (Throwable $error) {
             foreach ($written as $path) {
                 Storage::disk('public')->delete($path);
@@ -213,6 +240,25 @@ class CatalogueAdmin
         }
 
         return $record;
+    }
+
+    /** @param list<string>|null $toDelete */
+    public function purgeAssetIfOrphaned(string|MediaAsset $asset, ?array &$toDelete = null): bool
+    {
+        $asset = $asset instanceof MediaAsset ? $asset : MediaAsset::whereKey($asset)->first();
+        if (! $asset || $asset->isProtectedLegacy() || $asset->isReferenced()) {
+            return false;
+        }
+
+        $path = $asset->storage_path;
+        $asset->delete();
+        if ($toDelete !== null) {
+            $toDelete[] = $path;
+        } else {
+            Storage::disk('public')->delete($path);
+        }
+
+        return true;
     }
 
     /** @param list<string> $written */
@@ -242,5 +288,135 @@ class CatalogueAdmin
         }
         $record->update(['admin_modified_at' => now()]);
         $record->delete();
+    }
+
+    /**
+     * @param  array{title?: string|null, alt_text?: string|null}  $data
+     */
+    public function updateMediaMetadata(string $assetId, array $data): MediaAsset
+    {
+        Gate::authorize('manage-catalogue');
+        $asset = MediaAsset::whereKey($assetId)->firstOrFail();
+        $validated = Validator::make($data, [
+            'title' => 'nullable|string|max:255',
+            'alt_text' => 'nullable|string|max:255',
+        ])->validate();
+
+        $asset->update([
+            'title' => $validated['title'] ?? null,
+            'alt_text' => $validated['alt_text'] ?? null,
+            'admin_modified_at' => now(),
+        ]);
+
+        return $asset;
+    }
+
+    public function detachMediaFromProduct(string $assetId, string $productId): void
+    {
+        Gate::authorize('manage-catalogue');
+        DB::transaction(function () use ($assetId, $productId): void {
+            $product = Product::whereKey($productId)->firstOrFail();
+            $product->media()->detach($assetId);
+            $product->update(['admin_modified_at' => now()]);
+
+            $remaining = DB::table('product_media')
+                ->where('product_id', $productId)
+                ->orderBy('sort_order')
+                ->get();
+
+            foreach ($remaining as $index => $row) {
+                if ($row->sort_order !== $index) {
+                    DB::table('product_media')
+                        ->where('id', $row->id)
+                        ->update(['sort_order' => $index]);
+                }
+            }
+        });
+    }
+
+    /**
+     * @param  list<string>  $assetIds
+     * @return array{deleted: int, skipped_protected: int}
+     */
+    public function deleteMediaAssets(array $assetIds, bool $detachFirst = true): array
+    {
+        Gate::authorize('manage-catalogue');
+        $deleted = 0;
+        $skipped = 0;
+        $toDeletePaths = [];
+
+        DB::transaction(function () use ($assetIds, $detachFirst, &$deleted, &$skipped, &$toDeletePaths): void {
+            if ($detachFirst) {
+                $affectedProductIds = DB::table('product_media')
+                    ->whereIn('media_asset_id', $assetIds)
+                    ->pluck('product_id')
+                    ->unique()
+                    ->all();
+
+                DB::table('product_media')->whereIn('media_asset_id', $assetIds)->delete();
+
+                foreach ($affectedProductIds as $productId) {
+                    Product::whereKey($productId)->update(['admin_modified_at' => now()]);
+                    $remaining = DB::table('product_media')
+                        ->where('product_id', $productId)
+                        ->orderBy('sort_order')
+                        ->get();
+                    foreach ($remaining as $index => $row) {
+                        if ($row->sort_order !== $index) {
+                            DB::table('product_media')->where('id', $row->id)->update(['sort_order' => $index]);
+                        }
+                    }
+                }
+
+                Brand::withTrashed()->whereIn('image_media_id', $assetIds)->update(['image_media_id' => null, 'admin_modified_at' => now()]);
+                Brand::withTrashed()->whereIn('logo_media_id', $assetIds)->update(['logo_media_id' => null, 'admin_modified_at' => now()]);
+                Category::withTrashed()->whereIn('image_media_id', $assetIds)->update(['image_media_id' => null, 'admin_modified_at' => now()]);
+            }
+
+            $assets = MediaAsset::whereIn('id', $assetIds)->get();
+            foreach ($assets as $asset) {
+                if ($asset->isProtectedLegacy() || $asset->isReferenced()) {
+                    $skipped++;
+
+                    continue;
+                }
+                $toDeletePaths[] = $asset->storage_path;
+                $asset->delete();
+                $deleted++;
+            }
+        });
+
+        foreach ($toDeletePaths as $path) {
+            Storage::disk('public')->delete($path);
+        }
+
+        return ['deleted' => $deleted, 'skipped_protected' => $skipped];
+    }
+
+    /**
+     * @param  list<UploadedFile>  $files
+     * @return list<MediaAsset>
+     */
+    public function uploadToLibrary(array $files): array
+    {
+        Gate::authorize('manage-catalogue');
+        $written = [];
+        $assets = [];
+        try {
+            foreach ($files as $file) {
+                if (! $file instanceof UploadedFile) {
+                    continue;
+                }
+                $folder = 'media/'.now()->format('Y/m-d').'/'.(string) Str::uuid7();
+                $assets[] = $this->upload($file, $folder, $written);
+            }
+        } catch (Throwable $e) {
+            foreach ($written as $path) {
+                Storage::disk('public')->delete($path);
+            }
+            throw $e;
+        }
+
+        return $assets;
     }
 }

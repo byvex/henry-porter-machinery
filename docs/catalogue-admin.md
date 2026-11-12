@@ -14,7 +14,16 @@ Image filenames contain a readable original name and a UUIDv7 suffix, capped at 
 
 Uploads accept JPEG, PNG, WebP, GIF and AVIF up to 10 MB each, with at most 20 new product images per save. Configure PHP `upload_max_filesize` to at least 10M and `post_max_size` high enough for the complete request (220M for twenty maximum-size files), together with the web server request limit. Custom browser-ready CSS is in `public/css/admin.css`; Tailwind classes still require an asset build.
 
-Removing or replacing an image detaches it without deleting shared files. Product deletion is recoverable through the deleted-products filter. Brand/category deletion is blocked while referenced; deactivate these instead. Hidden template/content records remain excluded from public catalogue queries even if their publication field is changed.
+Removing or replacing an image removes unreferenced user-uploaded files from storage and deletes their media record. Shared or legacy-imported assets (`catalogue/joomla/`) and images referenced in descriptions or by other records remain preserved. Orphaned files or unreferenced records can be audited and purged via `php artisan catalogue:prune-orphaned-media` (with `--apply`). Product deletion is recoverable through the deleted-products filter. Brand/category deletion is blocked while referenced; deactivate these instead. Hidden template/content records remain excluded from public catalogue queries even if their publication field is changed.
+
+## Media Library & Image Picker
+
+Access `/admin/media` via the sidebar under **Catalogue &rarr; Media Library**.
+- **Media Browsing & Filters**: Visual thumbnail grid with pagination (36 per page), search by title/alt/path, filter by source (WhatsApp/local, admin upload, remote web, legacy Joomla), attachment state (attached anywhere, products, brands/categories, unattached/orphaned), brand, and product.
+- **Attachment Details Modal**: Clicking any image opens an inspector modal with full-size preview, technical metadata (storage path, MIME, file size, SHA256 checksum), editable title and alt text, and a live "Where this image is used" panel listing attached products (with Cover vs Gallery badges and quick detachment), brands, and categories.
+- **Bulk Actions**: Multi-select images to perform bulk detachment from products or one-step permanent deletion (detaches and deletes from disk and database; protected legacy files and HTML-embedded images are preserved).
+- **Direct Uploads**: Upload standalone media directly into `media/YYYY/MM-DD/{uuid}/` from `/admin/media`.
+- **Choose from Media Library**: Product, brand, and category edit screens include a **Choose from Media Library** picker modal, allowing existing images to be linked to product galleries, brand logos/photos, or category images without re-uploading duplicate files.
 
 Product, category and brand descriptions include a Tiptap visual editor with a **Visual / HTML** mode toggle. Existing imported HTML (including specification tables, cell spans and embedded `/storage/...` images) remains untouched until edited, and all saved markup continues to pass through `CatalogueHtml` server-side sanitisation.
 
